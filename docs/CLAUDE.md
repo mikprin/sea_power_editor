@@ -44,7 +44,8 @@ no "start a 90-second countdown when X happens" condition. `Disabled=True` +
 `Action_EnableTriggers` does *not* rebase the clock — an enabled trigger whose
 `Time` has already passed fires immediately.
 
-Two workarounds that work:
+Three workarounds. **C, the stopwatch unit (§16), is the only true relative delay** —
+prefer it when the delay must start on an event. A and B are the cheap options.
 
 **A. Area + absolute deadline, ANDed.** The loss only lands if the threat is still
 present at the deadline, so killing it cancels the trigger:
@@ -70,6 +71,9 @@ Useful as a "do this later, when I say so" hook.
 
 `Action_DisableTriggers=TriggerN` cancels a pending deadline (e.g. threat destroyed).
 `Action_ReactivateTriggers` re-arms an already-fired trigger so it can fire again.
+
+**C. The stopwatch unit.** Spawn a unit that travels a known distance at a known
+speed and gate on its arrival. See §16 — this is the real answer.
 
 Also seen in vanilla and unexplained: `Condition_Condition1_Time=-27900`
 (`02 Action in the Taiwan Strait.ini`, Trigger5). Negative times are undocumented and
@@ -99,6 +103,32 @@ Condition_X_MinimumUnits=2                           ; optional
 how vanilla draws a **labelled circle on the tactical map without any trigger logic**
 (`08A Pathfinders.ini` Trigger6, `07 Action in the Java Sea.ini` "Datum A01"). Cheap
 way to mark a search box.
+
+### Barrier lines: there is no rectangular trigger area
+
+`Kind=Rectangle` and `Shape=Rectangle` exist for **map symbols and zones only**.
+Trigger conditions accept `AreaRadiusNM` and nothing else, so a "line the player
+cannot sail around" has to be built as a **chain of overlapping circles ORed inside
+one trigger**:
+
+```ini
+Condition_Gate1_Type=UnitsInTheArea
+Condition_Gate1_PositionNM=-7.267,0,-6.836
+Condition_Gate1_AreaRadiusNM=3
+Condition_Gate1_AreaDisplaySide=None
+Condition_Gate1_Units=NeutralVessel1
+; ...Gate2..Gate7 spaced 5 NM apart along the barrier bearing...
+ConditionsCompleted=<Gate1> OR <Gate2> OR <Gate3> OR <Gate4> OR <Gate5> OR <Gate6> OR <Gate7>
+```
+
+Radius 3 with 5 NM spacing gives a continuous 6 NM wide corridor with 1 NM of
+overlap — no gaps for a unit to thread. Set every gate to `AreaDisplaySide=None` and
+draw one `Kind=Rectangle` map symbol over the same line so the player sees a clean
+barrier instead of a string of blobs.
+
+Check the geometry before shipping: compute the minimum distance from each gate
+centre to every leg of the target's route. Exactly one gate should be under the
+radius; the neighbours sitting ~4–5 NM off are what catch a player who steers wide.
 
 ---
 
@@ -284,6 +314,36 @@ editor artifact and is ignored for surface units; `0` is fine.
 `Free`, `Tight`, `Hold`; `CrewSkill` values used are `Green`, `Trained`, `Seasoned`,
 `Veterans`, `Ultra`.
 
+### Per-unit magazine overrides
+
+The Task Force guide mentions "Stores Editor container overrides" without ever giving
+the syntax. It is a **sibling section named after the unit**, not a field inside it:
+
+```ini
+[Taskforce2Vessel1]
+Type=ir_fab_boghammar
+VariantReference=Default
+
+[Taskforce2Vessel1_WeaponSystem1]
+Ammunition1=ir_107mm_rocket
+Ammunition1_Count=0
+```
+
+`<UnitSection>_WeaponSystemN` targets the Nth weapon system on that hull;
+`AmmunitionN` / `AmmunitionN_Count` set how many rounds of a specific ammo type it
+carries. Count `0` empties the magazine while leaving the mount installed.
+
+This is the correct lever for "armed, but not *that* armed" — de-fanging a specific
+weapon on a unit without swapping its class or loadout, capping Harpoons or heavy
+torpedoes on a task group, or making a neutral craft safe to misidentify.
+
+The ammunition ID is the game's own ammo file name and is not guessable — get it by
+placing the unit in the editor, setting the stores there, saving, and reading back
+what the editor wrote.
+
+Verified from an editor-generated file, not from vanilla — no Pacific Strike mission
+uses it.
+
 ---
 
 ## 11. Retreat anchors
@@ -375,3 +435,114 @@ Naming convention in vanilla is `<MissionNumber><Fact>`, e.g. `08AmmoCarrierSurv
   `SquadronReference=` and `LoadoutVariant=` **cannot be validated here**. Source them
   from vanilla campaign files, `.unitgroup` presets, or the game's own unit `.ini`s,
   and flag anything guessed.
+
+---
+
+## 16. The stopwatch unit — a real relative timer
+
+**Status: untested in-game.** Every mechanic it is built from is verified
+individually (§2B, §5, §3); the combination has not been run yet. Calibrate once
+before trusting the numbers.
+
+The engine has no relative-time condition, but it does have a clock: **units move**.
+Park a unit far away with `Disabled=True`, spawn it on the event you want to time,
+and gate on its arrival at a circle a known distance downrange. Arrival time is
+`distance / speed` **after the spawning trigger fired**, which is exactly the relative
+delay `Type=Time` cannot express.
+
+```
+delay_seconds = distance_NM / speed_kt * 3600
+distance_NM   = speed_kt * delay_seconds / 3600
+```
+
+```ini
+; The clock. A neutral airliner parked 300 NM off in an empty corner at 35,000 ft,
+; where nothing will ever see it, shoot it, or wonder what it is. Vanilla already
+; scatters civ_707s at that range as background traffic, so it reads as normal.
+[NeutralAircraft1]
+Type=civ_707
+SquadronReference=Squadron8
+Disabled=True
+UnlimitedFuel=True
+MissionType=NoMission
+WeaponStatus=Hold
+RadarsActive=False
+CrewSkill=Trained
+RelativePositionInNM=300,35000,300
+Telegraph=3
+Heading=180
+Waypoints=300,35000,292|300,35000,285      ; 15 NM leg, two waypoints
+
+; Start the clock
+[Trigger9]
+Name=Commandos on the deck - start the boarding clock
+Condition_Boarding_Type=UnitsInTheArea
+Condition_Boarding_PositionNM=-0.57,0,-4.46
+Condition_Boarding_AreaRadiusNM=2
+Condition_Boarding_Units=Taskforce2Helicopter1
+ConditionsCompleted=<Boarding>
+Action_Taskforce1_Message=Taskforce1BoardingMessage
+Action_SetEnabledStatus=True
+Action_Units=NeutralAircraft1
+
+; The clock runs out - 15 NM at ~270 kt cruise = ~200 s after trigger 9
+[Trigger10]
+Name=Boarding clock expired - cargo lost
+Condition_ClockDone_Type=UnitsInTheArea
+Condition_ClockDone_PositionNM=300,0,285
+Condition_ClockDone_AreaRadiusNM=1
+Condition_ClockDone_AreaDisplaySide=None
+Condition_ClockDone_Units=NeutralAircraft1
+Condition_StillThere_Type=UnitsInTheArea
+Condition_StillThere_PositionNM=-0.57,0,-4.46
+Condition_StillThere_AreaRadiusNM=3
+Condition_StillThere_Units=Taskforce2Helicopter1
+ConditionsCompleted=<ClockDone> AND <StillThere>
+Action_EndMission=True
+Action_Victory=Taskforce2
+```
+
+`Action_DisableTriggers=Trigger10` from a "threat destroyed" trigger stops the clock.
+Several independent stopwatches = several units. They can chain: one clock's arrival
+spawns the next.
+
+### Why this beats the alternatives
+
+- The delay starts **when the event happens**, not at a time you guessed at authoring.
+- It survives the player being slow, fast, or paused, because unit movement and trigger
+  evaluation run on the same game clock and both scale with time acceleration.
+- It is deterministic and repeatable — same distance, same delay, every run.
+
+### Traps
+
+1. **Use an aircraft, not a boat.** A ship spawns at rest and spends the first minute
+   or so accelerating, so a short leg is badly non-linear and the delay comes out long.
+   An aircraft spawns at cruise and is at speed from the first frame. If it must be a
+   boat, calibrate empirically rather than trusting the arithmetic.
+2. **Telegraph → knots is undocumented.** There is no published mapping for
+   `Telegraph=0..5`. Run the mission once, note when the trigger actually fires, and
+   adjust the leg length. One calibration pass is enough because it is deterministic.
+   `Action_UnitVelocityInKnots` would remove the guesswork but is unverified (§5).
+3. **The clock unit is a real unit and it counts.** This is the sharp edge.
+   `HasNoUnitsOfType` (§4) will see it, and so will any "destroy all enemy vessels"
+   victory condition. Put the clock on a side or a `UnitType` you never test —
+   a `NeutralAircraft` is safe when your checks are about `Taskforce2` `Vessel`s.
+   It will also appear in the After Action Report.
+4. **It must be unreachable.** Anything that can detect it can shoot it, and a dead
+   clock means the trigger never fires. Far off-map, high altitude, `RadarsActive=False`,
+   `WeaponStatus=Hold`, `UnlimitedFuel=True` so it never RTBs or flames out.
+5. **Give it at least two waypoints.** The Civilian Routes section of the community
+   guide warns that single-waypoint units path oddly, which would corrupt the timing.
+6. **The player never sees the clock**, which is the point but also the cost: a
+   countdown the player cannot watch is less tense than a threat closing visibly.
+
+### When *not* to use it
+
+If the thing being timed is already a moving object the player can see, **make that
+object its own clock** — gate on the threat's position instead of a hidden proxy. That
+is what `01_rusted_sea.ini` does: the assault helicopter flies a 25 NM run-in and the
+player's four-minute window *is* its approach. Same determinism, no phantom unit, no
+`HasNoUnitsOfType` pollution, and the player can watch the timer close on the display.
+
+The stopwatch unit is for delays with no visible cause — a scuttling charge, a
+reinforcement call, a boarding party already below decks.
