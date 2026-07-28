@@ -23,3 +23,5 @@ Core Campaign Features
     As Phantom Wake grows in reputation and firepower, so do your enemies. What begins as skirmishes with local pirates and rogue patrol boats will eventually escalate into proxy wars against state-funded navies and rival PMCs sent to eliminate your growing monopoly.
 
 Rules of Engagement (ROE): Flexible. You are mercenaries. You shoot when fired upon, or when the contract pays enough to shoot first.
+
+Lore: Campaign Narrative built in Metal Gear Solid where a PMC is trying to survive in a world of cold war and corporate espionage. The player is a commander of a small PMC, starting with limited resources and gradually building up their fleet and capabilities through successful missions.
