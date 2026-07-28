@@ -102,13 +102,17 @@ rendezvous (3 NM), fishing grounds (4 NM), the Air Threat Axis boarding circle
 4. **Escort leg is 21 NM.** A 45 NM leg is nearly three hours at merchant speed.
 
 5. **The three pirate skiffs are hostile from mission start**, idling at Telegraph 1
-   inside the neutral cluster alongside a genuinely neutral `ir_fab_boghammar` and
-   `ir_pt_parvin`. Same "you cannot tell them apart" tension, but it avoids
-   green→red `Action_UnitTransferToTaskforce`, which is not demonstrated anywhere in
-   the vanilla campaign. (Green→blue, which the Vagabond now uses, is the mirror of
-   the blue→green case vanilla does demonstrate.)
+   inside the neutral cluster. They avoid green→red `Action_UnitTransferToTaskforce`,
+   which is not demonstrated anywhere in the vanilla campaign. (Green→blue, which the
+   Vagabond now uses, is the mirror of the blue→green case vanilla does demonstrate.)
 
-6. **No literal 200-second countdown.** There is no relative-time condition in the
+6. **All five small craft are `ir_pt_parvin`** — three hostile, two genuinely neutral.
+   Deliberately one hull class only: with a mixed fleet the player learns "boghammars
+   are safe" and stops looking. All five carry `MissilesPresent=False`, mirroring
+   `"_missilesPresent": false` in `Pirates.unitgroup`, which is what keeps the mortar
+   out of the fight. All three hostiles are `CrewSkill=Green` / `Morale=2`.
+
+7. **No literal 200-second countdown.** There is no relative-time condition in the
    engine — see `docs/CLAUDE.md` §2. The four-minute window is produced by the
    helicopter's approach geometry instead, which is more robust and reads the same
    in play.
@@ -130,7 +134,8 @@ rendezvous (3 NM), fishing grounds (4 NM), the Air Threat Axis boarding circle
 
 | Field | Value | Note |
 |---|---|---|
-| `ir_fab_boghammar`, `ir_pt_parvin` | `VariantReference=Default` | preset JSON says `_variantId: 0` |
+| `ir_pt_parvin` | `VariantReference=Default` | preset JSON says `_variantId: 0` |
+| `ir_pt_parvin` | `MissilesPresent=False` | **guess.** Mapped from `"_missilesPresent": false` in the `.unitgroup` preset. The field appears nowhere in vanilla mission files, so the name is unconfirmed — if the mortar still fires in testing, the real lever is a `LoadoutVariant=` on the Parvin and the variant list has to come from `StreamingAssets\original\vessels\ir_pt_parvin.ini` |
 | `fr_sa-321`, `iqaf_md500` | `SquadronReference=Default` | presets carry no squadron info |
 | `fr_sa-321` | `LoadoutVariant=Empty` | from the preset; unarmed transport |
 | `iqaf_md500` | `LoadoutVariant=Recon` | from the preset |
