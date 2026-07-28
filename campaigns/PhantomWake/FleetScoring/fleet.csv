@@ -1,0 +1,14 @@
+Alias,ClassName,Points,Role
+wp_pt_p4,P4-class,10,Expendable asset / Scout
+wp_pt_p6,P6-class,15,Cheap torpedo boat
+wp_pt_stenka,Stenka-class,20,Basic patrol boat (PB)
+wp_msc_T43K,T43K class,25,Minesweeper (MSC)
+wp_pt_shershen,Shershen-class,30,Torpedo boat (PT)
+wp_pt_shershen-er,Shershen-ER / Mol,35,Extended range torpedo boat
+wp_pt_turya,Turya-class,45,High-speed hydrofoil interceptor
+ir_pf_bayandor,Bayandor-class,50,Escort corvette / Frigate (PF)
+knm_ptg_snogg,Snøgg-class,90,Guided missile boat (PTG)
+rn_dd_z-class,Z-class,80,WW2 era artillery destroyer
+rn_dd_c-class,C-class,80,WW2 era artillery destroyer
+rn_dd_battle,Battle-class,90,Air defense destroyer
+usn_dd_gearing,Gearing-class FRAM I,130,Modernized destroyer with ASW
