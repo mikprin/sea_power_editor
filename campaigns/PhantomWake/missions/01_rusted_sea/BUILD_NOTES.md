@@ -165,17 +165,28 @@ Telegraph-to-knots mapping changes the pacing but not the order or the correctne
 
 | Field | Value | Note |
 |---|---|---|
+**All vessel references are now verified** against `docs/glossary/units.csv`
+(generated from `share/vessels`). Re-check any of them with
+`python3 tools/units.py show <alias>`. Confirmed: every `Type=` exists,
+`civ_ms_c7s68` has 21 variants so `Variant19` is valid and `Containers` is a real
+loadout, `ir_fab_boghammar` and `ir_pt_parvin` are correct on `Default`,
+`ir_pf_bayandor` has 5 variants so `Variant1` is valid, and every roster hull now
+lists real variants.
+
+What is still unverified:
+
+| Field | Value | Note |
+|---|---|---|
 | `ir_107mm_rocket` | ammo ID in the `_WeaponSystem1` blocks | from your editor-generated file, so this one is solid |
-| `ir_fab_boghammar` | `VariantReference=Default` | from your file |
-| `fr_sa-321`, `iqaf_md500` | `SquadronReference=Default` | presets carry no squadron info |
+| `fr_sa-321`, `iqaf_md500` | `SquadronReference=Default` | presets carry no squadron info; **aircraft are not indexed** — `share/aircraft` has not been copied in |
 | `fr_sa-321` | `LoadoutVariant=Empty` | from the preset; unarmed transport |
 | `iqaf_md500` | `LoadoutVariant=Recon` | from the preset |
 | `usn_ea-6b` | `SquadronReference=Squadron6` | from the vanilla campaign reward list |
-| `civ_ms_c7s68` | `Variant19` + `LoadoutVariant=Containers` | copied from vanilla Okinawa. Your file had `Default` — if `Variant19` misbehaves, switch it back |
-| `ir_pf_bayandor` | `Variant1` | anchor only, generator replaces it — low risk |
-| roster variants | `Variant1` except `usn_dd_gearing` | **matters** — a bad variant means the hull never appears in Task Force Builder |
 | `Action_UnitTelegraph`, `Action_UnitVelocityInKnots` | trigger 4 | documented in the community guide, unused in vanilla; both set for redundancy |
 | `Kind=Rectangle` + `Bearing=` | `MapSymbol_New6` | your editor wrote it; vanilla only uses `Kind=Oval` with `RadiusXNm` |
+
+Copy `StreamingAssets/original/aircraft` (and `land`, `weapons`) into `share/` and
+run `python3 tools/build_unit_index.py share/aircraft` to clear the top rows.
 
 ## Not built
 

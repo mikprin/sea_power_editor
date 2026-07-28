@@ -5,6 +5,7 @@ wp_pt_stenka,Stenka-class,20,Basic patrol boat (PB)
 wp_msc_T43K,T43K class,25,Minesweeper (MSC)
 wp_pt_shershen,Shershen-class,30,Torpedo boat (PT)
 wp_pt_shershen-er,Shershen-ER / Mol,35,Extended range torpedo boat
+knm_fs_sleipner,Sleipner-class,40,Cheap gun corvette (FS)
 wp_pt_turya,Turya-class,45,High-speed hydrofoil interceptor
 ir_pf_bayandor,Bayandor-class,50,Escort corvette / Frigate (PF)
 knm_ptg_snogg,Snøgg-class,90,Guided missile boat (PTG)

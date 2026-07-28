@@ -308,7 +308,7 @@ editor artifact and is ignored for surface units; `0` is fine.
 | `SetSelected=True` | unit selected when the mission opens |
 | `CallsignIndex=` | picks a specific callsign from the unit's list |
 | `TaskForceModeIgnoreUnit` | exempt a unit from generator replacement |
-| `Nation=US` / `UK` / `china` | flag override on civilians — sells a false-flag merchant |
+| `Nation=US` / `UK` / `china` | flag override on civilians — sells a false-flag merchant. Vanilla is inconsistent about case (`china` lowercase in a unit section, `China` in a variant file), so it is probably case-insensitive. Full nation vocabulary: `tools/units.py nations` |
 
 `MissionType=Patrol` is the only value used in vanilla; `WeaponStatus` values are
 `Free`, `Tight`, `Hold`; `CrewSkill` values used are `Green`, `Trained`, `Seasoned`,
@@ -337,9 +337,29 @@ This is the correct lever for "armed, but not *that* armed" — de-fanging a spe
 weapon on a unit without swapping its class or loadout, capping Harpoons or heavy
 torpedoes on a task group, or making a neutral craft safe to misidentify.
 
-The ammunition ID is the game's own ammo file name and is not guessable — get it by
-placing the unit in the editor, setting the stores there, saving, and reading back
-what the editor wrote.
+Both halves can now be looked up (§17). `tools/units.py arsenal <alias>` prints every
+weapon system on the hull, its magazine, the ammo it holds and the default count, then
+emits the override block to paste:
+
+```
+$ python3 tools/units.py arsenal ir_fab_boghammar
+  WeaponSystem1   107mm_Hasheb-1     Missile  ir_107mm_rocket   x441   5 NM
+  WeaponSystem2   12.7mm_DSHK_Dual   CIWS     wp_cal_05in       x3000
+```
+
+`tools/units.py check <mission.ini>` validates the override too: a `WeaponSystemN`
+the hull does not have, an ammunition alias that does not exist, or an override whose
+owning unit section is missing from the file.
+
+Two gotchas the table exposes:
+
+- **The index is the weapon system, not the magazine.** Several systems can share one
+  magazine — `usn_dd_gearing`'s twin MK32 mounts are `WeaponSystem2+WeaponSystem3`
+  both feeding `WeaponMagazineTorpedo`. `arsenal` shows the shared owners joined with
+  `+`; override either index.
+- **Some magazines have no owning weapon system at all** (decoy and noisemaker
+  ejectors sometimes sit alone). Those show a blank weapon system and cannot be
+  targeted by a `_WeaponSystemN` override.
 
 Verified from an editor-generated file, not from vanilla — no Pacific Strike mission
 uses it.
@@ -431,10 +451,10 @@ Naming convention in vanilla is `<MissionNumber><Fact>`, e.g. `08AmmoCarrierSurv
   `ConditionsCompleted` has a matching `Condition_<Token>_Type`, every
   `Action_*_Message` key exists in `[Language_en]`, and every objective named in an
   `Action_Objectives*` exists in `[Taskforce1_Objectives]`.
-- Repo is missing `StreamingAssets`, so `Type=`, `VariantReference=`,
-  `SquadronReference=` and `LoadoutVariant=` **cannot be validated here**. Source them
-  from vanilla campaign files, `.unitgroup` presets, or the game's own unit `.ini`s,
-  and flag anything guessed.
+- **Vessels and submarines can now be validated locally** — see §17. Aircraft,
+  helicopters, land units and weapons still cannot, so `SquadronReference=` and
+  aircraft `LoadoutVariant=` must come from vanilla campaign files or `.unitgroup`
+  presets and be flagged as unverified.
 
 ---
 
@@ -519,10 +539,11 @@ spawns the next.
    or so accelerating, so a short leg is badly non-linear and the delay comes out long.
    An aircraft spawns at cruise and is at speed from the first frame. If it must be a
    boat, calibrate empirically rather than trusting the arithmetic.
-2. **Telegraph → knots is undocumented.** There is no published mapping for
-   `Telegraph=0..5`. Run the mission once, note when the trigger actually fires, and
-   adjust the leg length. One calibration pass is enough because it is deterministic.
-   `Action_UnitVelocityInKnots` would remove the guesswork but is unverified (§5).
+2. **Telegraph → knots is known for vessels, not for aircraft.** `units.py show`
+   prints the exact per-telegraph speed table for any hull (§17), so a boat clock can
+   be computed rather than calibrated. Aircraft are not indexed yet, so an airliner
+   clock like the example above still needs one calibration run: note when the trigger
+   actually fires and adjust the leg. It is deterministic, so once is enough.
 3. **The clock unit is a real unit and it counts.** This is the sharp edge.
    `HasNoUnitsOfType` (§4) will see it, and so will any "destroy all enemy vessels"
    victory condition. Put the clock on a side or a `UnitType` you never test —
@@ -546,3 +567,81 @@ player's four-minute window *is* its approach. Same determinism, no phantom unit
 
 The stopwatch unit is for delays with no visible cause — a scuttling charge, a
 reinforcement call, a boarding party already below decks.
+
+---
+
+## 17. Unit alias / variant lookup
+
+A bad `Type=`, `VariantReference=`, `SquadronReference=` or `LoadoutVariant=` **fails
+silently** — the unit never spawns, the roster entry never appears in Task Force
+Builder, nothing is logged. Never guess these.
+
+`share/` (git-ignored: `vessels`, `aircraft`, `land_units`, `biologic`, `ammunition`)
+is flattened by `tools/build_unit_index.py` into four committed tables under
+`docs/glossary/` — **549 units, 5489 variants, 1049 weapon mounts, 341 ordnance
+types**. Query and validate with `tools/units.py`, packaged as the
+**`sea-power-units` skill**, which has the full command reference.
+
+```bash
+python3 tools/units.py check <mission.ini>       # run after every mission edit
+python3 tools/units.py show wp_ka-29             # variants, loadouts, role, speeds
+python3 tools/units.py arsenal usn_dd_gearing    # weapon systems and magazines
+python3 tools/units.py ammo --type Torpedo --target ASW
+python3 tools/units.py search --type Helicopter --role Transport --year 1985
+```
+
+`check` walks every unit section and every `_WeaponSystemN` magazine override and
+reports non-existent aliases, out-of-range variants, invalid loadouts, the
+Variant/Squadron mix-up, unknown ammunition, and weapon system indices the hull does
+not have. Exits non-zero.
+
+What the data says that is not obvious:
+
+- **Vessels, submarines, land units and biologics use `VariantReference=`; aircraft,
+  helicopters and VTOLs use `SquadronReference=`** with `Default`/`SquadronN` sections
+  in a `_squadrons.ini` sidecar. Same shape, different key. Mixing them fails silently.
+- **Every unit has a `Default`.** Vanilla rosters never list it; it is still always
+  valid in a mission unit section.
+- **Variants and squadrons are cosmetic** — hull number, flag, emblem, livery,
+  `Nation`, `ServiceDate`, occasionally `CustomAirGroup`. Never capability. Counts run
+  1 to 144. Choose by nation and date.
+- **`AvailableLoadouts` is the `LoadoutVariant` vocabulary**, under `[Cargo]` on
+  civilians and `[WeaponSystems]` on warships and aircraft. No section → omit the
+  field. Unlike variants, loadouts *do* change capability, and a hull may simply not
+  have the one the design needs: `fr_sa-321` offers only `AntiShipPrecision,AntiShip,
+  ASWKiller`, so it cannot be an unarmed boarding transport no matter how it is
+  configured. `usn_ch-46` with `LoadoutVariant=Transport` can.
+- **`[AI] Role=` is the Air Tasking `AllowedUnitRoles` vocabulary**: `Fighter`,
+  `Bomber`, `HeavyBomber`, `Attack`, `MPA`, `ASW`, `ASuW`, `ESM`, `EW`, `AEW`, `SEAD`,
+  `Recon`, `Targeting`, `Transport`, `SAR`, `Airliner`. Comma-separated per unit.
+- **`TelegraphVelocities=` in `[Physics]` is the Telegraph → knots table**: seven
+  values, `astern,stop,T1,T2,T3,T4,T5`, in knots. Only ~50 hulls override it (mostly
+  submarines); the rest use an engine default not present in the files. In 48 of those
+  50, **T5 equals `MaxForwardVelocity`** — the two Oberons are the exception, capped at
+  15 kt on the telegraph against a 17 kt physics limit. "Flank ≈ max speed" is a safe
+  planning assumption; the exact curve is there when it matters.
+- **`ServiceDate` can be `1959|1973`** — build year and refit. Earliest = in service from.
+- **Class names are not in the unit files.** They live in the game's localisation.
+  Alias + nation + service date is the practical identifier;
+  `campaigns/PhantomWake/FleetScoring/fleet.csv` is the local alias → class-name map.
+- **No unit `.ini` has a `[TaskForce]` block**, so campaign point costs come from
+  `fleet.csv` or the roster, never from the unit files.
+
+Ammunition notes:
+
+- `ammunition/` has **no variant sidecars** — one flat `.ini` per ordnance type, and
+  341 of the 415 files are real ordnance. The rest are sub-components (`Propulsion`,
+  `Fueltank`, `Antenna`, `Stabilizer`, `Afterburner`, `Radar`, `ECM`, `Container`)
+  that are never a valid `AmmunitionN=` value, so the builder filters by `Type`.
+- Ordnance `Type` values: `Missile`, `Torpedo`, `Bomb`, `Projectile`, `RBU`, `ASROC`,
+  `AerialRocket`, `MLRS`, `Sonobuoy`, `Chaff`, `Noisemaker`, `MOSS`, `CIWS`,
+  `AirDepthCharge`, `Paratrooper`, `LaserDesignator`. `TargetType` is `AAW`, `ASuW`
+  or `ASW`.
+- **Ranges are in nautical miles, velocities in knots** (`MinLaunchRange`,
+  `MaxLaunchRange`, `MaxVelocity`), except gun `MuzzleVelocity`, which is m/s.
+- `GuidanceType` and `WarheadType` are integers with legends buried in file comments;
+  the glossary decodes them (`3` → `ActiveRadar`, `0` → `BlastFrag`, and so on).
+- `AmmoPoints` is the supply-system cost of one round, not a campaign point cost.
+
+Everything under `StreamingAssets/original/` that matters for mission authoring is
+now indexed.
