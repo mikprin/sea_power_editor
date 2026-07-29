@@ -163,6 +163,24 @@ Condition_NoHulls_UnitType=Vessel
 
 `UnitClassified` needs `_Taskforce=` (who did the classifying) as well as `_Units=`.
 
+`UnitDetected` needs both `_Taskforce=` (who owns the unit being detected) and
+`_Units=` (which units). Fires when the detecting taskforce's sensors acquire
+any unit in the list — respects radar/sonar range, active/passive modes, and fog
+of war. Use `_MinimumUnits=1` to fire on first contact of any single target.
+
+```ini
+Condition_PiratesSpotted_Type=UnitDetected
+Condition_PiratesSpotted_Taskforce=Taskforce2
+Condition_PiratesSpotted_Units=Taskforce2Vessel1,Taskforce2Vessel2,Taskforce2Vessel3,Taskforce2Vessel4
+Condition_PiratesSpotted_MinimumUnits=1
+```
+
+Fires the instant player acquires any one pirate, wherever it is on its route —
+no static circle needed. Unverified edge case: `_Taskforce=Neutral` on a neutral
+unit. Vanilla example (`10 Vengeance at Luzon.ini` Trigger9) uses `Taskforce2`
+against enemy side; tested on optional subplot with neutral submarine in 01A
+Sweeping Net.
+
 ---
 
 ## 5. `Action_Units` is per-trigger, not per-action
