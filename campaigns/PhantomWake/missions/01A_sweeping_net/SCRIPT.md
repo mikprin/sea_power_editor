@@ -1,8 +1,8 @@
 ### **CONTRACT 01-A: OPERATION SWEEPING NET**
 
 **CLIENT:** Regional Fishing Conglomerate
-**LOCATION:** Somali Coastline, Horn of Africa
-**TIME / WEATHER:** 14:00 Local, Clear Skies, Calm Seas
+**LOCATION:** Pemba Channel, Tanzanian Coast, East Africa
+**TIME / WEATHER:** 14:00 Local, 2 July 1985, Clear Skies, Sea State 1
 
 #### **1. In-Game Briefing (UI Text)**
 
@@ -29,17 +29,26 @@ This mission relies on close-quarters maneuvering and target identification rath
 
 
 * **The Civilian Fleet (Neutrals):**
-* **Action:** Spawn 6 to 8 static or slow-moving civilian fishing boats scattered randomly across the center of the map.
-* **Condition:** `Alliance = Neutral`.
+* **Action:** 5 small civilian fishing boats (dhows, sampans, fishing boats) scattered across the search sector, with 2 deep-ocean freighters transiting at extreme range for background clutter.
+* **Condition:** `Alliance = Neutral`, `AutomateRoute=True` for organic movement.
 * These act as radar clutter and obstacles. The player must navigate around them to find the real targets.
 
 
 * **The Pirates (Hostiles):**
-* **Action:** Spawn 5 fast, lightly armed pirate skiffs (e.g., modified P4-class and basic motorboats (ir_fab_boghammar)).
-* **Behavior:** They begin stationary, hiding right next to neutral fishing boats.
-* **Trigger (Aggro):** `Distance to Unit`. When the player's Task Force approaches within 3 Nautical Miles, the pirate skiffs break cover, accelerate to maximum speed, and swarm the player's ships using unguided rockets or heavy machine guns.
+* **Action:** 4 fast, lightly armed pirate skiffs (three wp_pt_p4 + one ir_pt_parvin) patrol the search sector on an authored northeast course at Telegraph 4.
+* **Behavior:** They are hostile from mission start (`WeaponStatus=Free`), moving under their own orders — not hiding stationary.
+* **Trigger (Aggro):** `UnitDetected` on any one skiff. When the player's sensors actually acquire the flotilla, a warning pops up. No scripted status change — they are already weapons-free and will engage at contact range.
 
 
 * **End Conditions:**
-* **Victory:** `Unit Destroyed` (All 5 Pirate Skiffs are sunk). Triggers a success message: `[ATLAS]: "Targets neutralized. The conglomerate just wired the funds. Good hunting, Commander."`
-* **Defeat:** `Unit Destroyed` (Player's flagship is sunk) OR `Alliance Engagement Violation` (Player sinks a neutral fishing boat, leading to an immediate contract termination).
+* **Victory:** All 4 pirate skiffs destroyed. Triggers: `[ATLAS]: "Targets neutralized. The conglomerate just wired the funds. Good hunting, Commander."`
+* **Defeat:** Player task force wiped out (no vessels remaining) OR one or more neutral fishing boats destroyed (immediate contract termination, no partial payment).
+
+---
+
+#### **4. Optional Subplot: Syndicate Surveillance Asset**
+
+* **Hidden element:** An unidentified diesel submarine (Australian Oberon-class, Nation=Terrorists) loiters passively in the search sector.
+* **Trigger (Detection):** When the player's sonar acquires the contact, an ECHO alert pops: unidentified acoustic signature, non-standard sensor fit, no transponder.
+* **Optional Objective (Hidden):** Destroy the unidentified contact. Reward: 5 points, no penalty if ignored. Does NOT affect ProtectCivilians or the primary victory condition.
+* **Significance:** Not part of the conglomerate's contract — a Syndicate spy asset, flagged for the record. Killing it is a bonus, not a requirement.
