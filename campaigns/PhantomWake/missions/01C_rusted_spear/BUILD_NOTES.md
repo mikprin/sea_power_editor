@@ -3,6 +3,7 @@
 Mission file: [01C_rusted_spear.ini](../01C_rusted_spear.ini)
 Script: [SCRIPT.md](SCRIPT.md)
 Editor backbone it came from: `share/01C.ini`
+Briefing: [01C_rusted_spear_briefing/](../01C_rusted_spear_briefing/)
 
 **9 triggers, 4 objectives, 9 hostile patrol craft, 1 helicopter, 3 phases.**
 For comparison: 01A is 8 triggers and 4 objectives, 01B is 13 and 5.
@@ -13,7 +14,7 @@ For comparison: 01A is 8 triggers and 4 objectives, 01B is 13 and 5.
 
 ---
 
-## Geography
+## Geography — measured, not guessed
 
 Map centre unchanged from the backbone: `-6.08 / 39.04`, the Zanzibar Channel.
 
@@ -21,54 +22,58 @@ Map centre unchanged from the backbone: `-6.08 / 39.04`, the Zanzibar Channel.
 X = (lon - 39.04) * 60      Z = (lat + 6.08) * 60
 ```
 
-The one fact that drove every placement decision: **Unguja (Zanzibar) island
-occupies roughly X 8.4..30.6, Z -24..21.6.** That was derived by checking which
-of the backbone's authored waypoints were valid water and which longitudes they
-avoided at which latitudes. Consequences:
+**The first version of this mission used an inferred coastline and it was
+wrong.** After the first test run the campaign-map screenshot became ground
+truth: the land mask was extracted from it, calibrated on the deployment
+rectangle (12.375 px per NM, cross-checked against two authored map symbols)
+and cleaned of the mission's own red and blue symbol overlays. Every position
+and every route leg in the file is now sampled against that mask.
 
-- `Z > 22` is north of the island — open water.
-- `X < 8` is the channel, west of the island. Shallow, ~40 m, which is exactly
-  what the script needs for "the submarine cannot dive".
-- `X > 31` is the deep ocean east of the island.
+What that corrected:
 
-Every position and waypoint in the mission sits inside water already proven by a
-route you drew in the backbone. Nothing was placed on faith.
+- The large island east of the playfield is **PEMBA**, not Unguja. A threat
+  arrow at NM (40, 45) was sitting on top of it, and the deployment box at
+  (54, 26) was clipping its southern tip.
+- The "Unguja north-east land at X 30..34" in the first draft did not exist. It
+  was the deployment rectangle's own border being read as coastline.
 
-### The one change to your layout
+Measured layout:
 
-**The deployment zone moved from NM (53, -8) to (54, 26).** Same 40 × 15 box,
-same deep water east of Zanzibar, shifted 34 NM north.
+```
+Mainland (Tanzania)   X <= -12 at Z 6..14, receding to X <= -4 by Z 36
+Unguja north end      X 10..20 at Z 4..22   (Tumbatu at X 10..12, Z 14..18)
+Pemba                 X 32..48 at Z 36..60
+Zanzibar Channel      X -12..8 at Z 6..20   <- the bay, ~20 NM wide
+Open water north      X -4..30 at Z 22..60
+```
 
-Reason: at Z -15.5..-0.5 the box sat due east of the island *at the island's own
-latitude*, so any westward course ran into Unguja. The player had to steam ~40 NM
-around the north tip before the mission could begin. At Z 18.5..33.5 the box is
-clear of the island in latitude and the run-in is a straight 20 NM to the channel
-mouth.
+So the channel really is a bounded bay, mainland west and Unguja east, and its
+northern mouth at Z ~20 is a door a picket line can close. That is the mission
+in one sentence, and it is why everything moved into the channel.
 
-Everything else of yours was kept and only renamed or re-scoped.
-
----
+Audit after repositioning: **35 surface coordinates and 4 route paths all clear
+of land; 7 map symbols, 1 zone and 1 retreat anchor all in water; no overlap
+between any two briefed circles or between a circle and the deployment box.**
 
 ## Phase geometry
 
 | Element | NM position | Notes |
 |---|---|---|
-| Player anchor | (38, 0, 26) hdg 270 | inside the deployment box, west edge |
-| Picket line | (13.5, 25.5) (9.5, 25) (5.5, 24.5) (1.5, 24) | line abreast, 4 NM spacing, stationary |
-| Nyoka holding position | (5.5, 0, 19.5) | surfaced, plant shut down |
-| Nyoka transit route | (8, 24) → (11, 28) → (14, 31.5) | ~14.8 NM |
-| NavPoint Zulu | (14, 31.5) r=4 | south end of the Pemba Channel — genuinely deep |
-| Interceptor pair spawn | (-3, 14) (-3.6, 13.2) | mainland shore, 38 kt |
-| Coastal squadron spawn | (24, 44) (25, 45) (23, 45) | ~15 NM to the shelf, ~24 min |
-| Mi-14 spawn | (16, 1000, 58) | ~31 NM ingress, ~15 min |
+| Deployment box | X 2..26, Z 34..42 | open water north of the channel mouth |
+| Player anchor | (10, 0, 36) hdg 195 | 18 NM up-threat of the picket |
+| Picket line | (6,20) (2,20) (-2,20) (-6,20) | line abreast across the mouth, 4 NM spacing, stationary |
+| Nyoka holding position | (0, 0, 11) | mid-channel, 9 NM behind the picket, surfaced |
+| Nyoka transit route | (1,19) → (5,25) → (9,27.5) | 21.1 NM authored |
+| NavPoint Zulu | (10, 28) r=4 | clear of the mouth |
+| Interceptor pair | (-8, 11) (-8.6, 10.2) | mainland shore, 38 kt |
+| Coastal squadron | (14,50) (15,51) (13,51) | ~22 NM to the shelf, ~35 min |
+| Mi-14 | (10, 1000, 54) | ~30 NM ingress, ~16 min |
+| Retreat anchor (Red) | (-4, 26) | mainland side |
 
-Nyoka's crawl is ~14.8 NM and the win circle catches her 4 NM early, so the
-escort leg is roughly **11 NM of effective transit — about 41 minutes at her
-16 kt flank.** That number is the whole pacing budget of the mission and it is
-why the sub sits at (5.5, 19.5) rather than deeper in the channel where you
-originally marked her. Deeper in was a 2.5-hour crawl.
-
----
+Escort leg is 21.1 NM authored; the 4 NM Zulu radius catches her early, so
+**~17 NM effective, about 64 minutes at her 16 kt flank.** Player transit is
+18.4 NM, so the contract runs ~90 minutes of game time. In line with 01B's two
+hours, and there is no clock on it.
 
 ## Script → implementation decisions
 
@@ -115,26 +120,41 @@ The threat is close-range gunfire and one CAS-fitted Mi-14, so a gun destroyer
 can win the whole contract without opening a missile magazine — which is the
 point, because the fee is a submarine, not cash.
 
-### Handing over the submarine
+### How the boat joins the fleet — the Fixed Wing bug
 
-`Trigger4` fires when the player gets within 3 NM and runs
-`Action_UnitTransferToTaskforce=Taskforce1` on `NeutralSubmarine1`.
+**Symptom from the first test run: the awarded Foxtrot arrived in the player's
+task force under the FIXED WING tab.**
 
-**This is the one inferred field in the file.** Vanilla Pacific Strike uses that
-action with the values `Neutral` and `Taskforce2` only; `Taskforce1` is
-documented in the community guide but never appears in a shipped mission. If the
-engine rejects it, the player cannot steer her — every other trigger still
-fires, so the mission does not break, it just stops being an escort. **Worth
-testing first.**
+Cause: the boat was awarded with
+`TaskForceModeCompletionRewardedUnits=wp_ss_foxtrot,Variant66,1` in
+`campaign.ini`. Every occurrence of that field in the vanilla Pacific Strike
+campaign is an aircraft with a `SquadronReference`:
 
-The transit route is issued in the same trigger and telegraph is set three
-redundant ways (`Action_UnitTelegraph`, `Action_UnitVelocityInKnots`, and a
-`/SetTelegraph,5` inline command on the first waypoint) because docs/CLAUDE.md
-§5 flags all of those as unverified. The player can override every one of them
-by hand, which is the real safety net.
+```
+TaskForceModeCompletionRewardedUnits=usn_p-3c,Squadron31,1|usn_a-7e,Squadron10,2|...
+```
 
-She is authored with **no `Waypoints=` and `Telegraph=0`** so she cannot wander
-off her marked position before the player arrives.
+Three uses, all aircraft, no vessel or submarine anywhere. The field appears to
+assume aircraft and files whatever it is handed accordingly. **Do not use it for
+vessels or submarines.**
+
+Fix: award her with `JoinTaskForce=True` on the mission unit section instead —
+which requires the section to be named `Taskforce...VesselN / SubmarineN /
+AircraftN / HelicopterN`. So she is now authored as **`[Taskforce1Submarine1]`**,
+not `NeutralSubmarine1`, with `CampaignTag`, `CampaignRepair=True` and
+`TaskForceModeIgnoreUnit=True`.
+
+**Accepted side effect:** she belongs to the player from second one rather than
+defecting on contact. In exchange, the mission no longer depends on
+`Action_UnitTransferToTaskforce=Taskforce1` — the one field that appeared
+nowhere in vanilla — and can no longer be soft-locked by it failing. That
+removes the biggest risk in the file.
+
+The "goes under player control" beat is preserved narratively: she sits at
+`Telegraph=0` with no `Waypoints`, her crew will not start engines until they
+see a Phantom Wake hull, and `Trigger4` issues the route on contact. The win
+trigger stays `Disabled=True` until the rendezvous fires, so sending her out
+alone cannot skip the escort.
 
 ### Making the enemy go for the sub, not the player
 
@@ -252,14 +272,86 @@ One bug was caught by that pass and fixed: `Trigger7`, the victory trigger, was
 
 ---
 
+## Briefing
+
+Vanilla **does** ship briefings, contrary to docs/CLAUDE.md §14 — every Pacific
+Strike mission has one. They are found **by folder-name convention, with no ini
+keys at all**: `<mission ini basename>_briefing/` next to the mission file,
+containing `BriefingText_<lang>.xml` and `BriefingMap_<lang>.xml`.
+
+There are no `MissionBriefing*` keys anywhere in the vanilla campaign, so the
+`MissionBriefingLeftPane` / `MissionBriefingRightPane` route in the community
+guide and in `docs/briefing_setup_guide.md` is not how the shipped campaign does
+it. 01C had no briefing because it had no such folder.
+
+Now at [01C_rusted_spear_briefing/](../01C_rusted_spear_briefing/):
+
+- `BriefingText_en.xml` — `<Grid>` root, NATO message layout copied from
+  Okinawa's structure (PRIORITY / FM / TO / INFO / SUBJ, then numbered
+  paragraphs). Classification reads COMMERCIAL IN CONFIDENCE rather than SECRET,
+  because Phantom Wake is a company, not a navy. `{TaskForceName}` substitutes.
+- `BriefingMap_en.xml` — `<Viewbox>` + `<Canvas Width="810" Height="810">`.
+- `01C_channel.png` — the base map, **generated from the same land mask** at
+  15 px per NM covering NM X -14..40, Z 4..58. Because it is rendered from the
+  boolean mask rather than copied from the screenshot, none of the mission's own
+  symbols bleed into it.
+
+Canvas mapping, for editing the overlay:
+
+```
+Canvas.Left = (X_nm + 14) * 15        Canvas.Top = (58 - Z_nm) * 15
+```
+
+Only XAML resource keys that already appear in vanilla briefings are used
+(`Font.Size.Header`, `NTDS.FriendColour`, `NTDS.HostileColour`,
+`NTDS.Allied.Submarine`, `NTDS.Enemy.Surface`, `NTDS.Enemy.Air`,
+`ContactIconThickness`) — an unknown key fails the whole pane. Both files parse
+as valid XML and the asset reference resolves.
+
+Only `_en` is authored. Vanilla ships en/de/ja/ru and no cn, so partial language
+coverage is normal.
+
+---
+
+## Two things worth fixing outside this mission
+
+1. **`PopupStyle=Message` is not a valid value.** Vanilla uses exactly four:
+   `Intro`, `NavalMessage`, `Notification`, `Outro`. `01_rusted_sea.ini` has 8
+   occurrences of `Message` and `01A_sweeping_net.ini` has 2. 01B and 01C are
+   clean. Those popups may be falling back to a default style or not rendering
+   as intended.
+2. **No briefing folders for 01, 01A or 01B either.** Same convention applies —
+   `01_rusted_sea_briefing/`, `01A_sweeping_net_briefing/`,
+   `01B_safe_heaven_briefing/`.
+
+---
+
+## Intel message format
+
+Checked against vanilla. Intel strings are **plain text with no `Title=` /
+`Body=` structure and no XAML** — `Action_Taskforce1_Intel=<key>` and
+`<key>=One or two sentences.` in `[Language_en]`. That is what 01C already had.
+
+One convention difference: all four vanilla missions that use intel name the key
+`Taskforce1<Something>Intel`. 01C's keys were `StartIntel`, `BlockadeIntel` and
+so on, so they have been renamed to `Taskforce1StartIntel` etc. to match. The
+key name is arbitrary as far as the parser is concerned, so this is insurance
+rather than a fix. `01A` and `01B` still use the short form.
+
+Also confirmed correct and left alone: the popup `Title=...\nLINE\n<size=24>...`
+shape with bare continuation lines inside `Title` is exactly what Okinawa does.
+
+---
+
 ## Open items for playtest
 
-Only two, and both are engine questions rather than design ones.
-
-1. **`Action_UnitTransferToTaskforce=Taskforce1`.** The load-bearing unverified
-   field. If the boat does not become steerable at the rendezvous, this is why.
-2. **`Attack=` on vessel sections.** Not in vanilla at all. If the interceptors
-   ignore the submarine and chase the player instead, this is why.
+1. **`Attack=` on vessel sections.** Not in vanilla at all. If the interceptors
+   ignore the submarine and chase the player instead, this is why. Degrades to
+   an ordinary intercept.
+2. **`JoinTaskForce=True` on a submarine section.** Documented, and the section
+   name is now legal, but vanilla never awards a submarine this way — no
+   Pacific Strike mission uses `JoinTaskForce` at all. If she still lands in the
+   wrong tab, the remaining lever is `CurrentTaskForce` seeding in `campaign.ini`.
 
 **No time limit**, matching Mission 01 and 01A. 01B is the only mission in the
 campaign with one — a 7200 s sunrise hard fail plus an 80-minute warning — and it
