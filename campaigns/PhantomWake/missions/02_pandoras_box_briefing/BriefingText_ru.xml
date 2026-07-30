@@ -1,0 +1,130 @@
+<Grid
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="10"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="10"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="10"/>
+        <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="10"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="Auto"/>
+    </Grid.ColumnDefinitions>
+
+    <TextBlock Grid.Row="1" Grid.ColumnSpan="4" HorizontalAlignment="Left" FontSize="{StaticResource Font.Size.Header}">
+        ЗАЩИЩЁННЫЙ КАНАЛ - ТОЛЬКО ДЛЯ КОМПАНИИ
+        <LineBreak/>
+        Z 061430Z АВГ 85
+    </TextBlock>
+
+    <TextBlock Grid.Row="3" Grid.Column="0" FontSize="{StaticResource Font.Size.Header}" Text="ОТ"/>
+    <TextBlock Grid.Row="3" Grid.Column="2" FontSize="{StaticResource Font.Size.Header}" Text="PHANTOM WAKE, ОТДЕЛ КОНТРАКТОВ - АТЛАС"/>
+    <TextBlock Grid.Row="4" Grid.Column="0" FontSize="{StaticResource Font.Size.Header}" Text="КОМУ"/>
+    <TextBlock Grid.Row="4" Grid.Column="2" FontSize="{StaticResource Font.Size.Header}" Text="{TaskForceName}"/>
+    <TextBlock Grid.Row="5" Grid.Column="0" FontSize="{StaticResource Font.Size.Header}" Text="КОПИЯ"/>
+    <TextBlock Grid.Row="5" Grid.Column="2" FontSize="{StaticResource Font.Size.Header}">
+        СИРЕНА - ВНЕШНИЕ СВЯЗИ<LineBreak/>
+        E.C.H.O. - ТАКТИЧЕСКИЕ СИСТЕМЫ<LineBreak/>
+        НЕЗАРЕГИСТРИРОВАННЫЙ АБОНЕНТ - ИСТОЧНИК ФАРВАТЕР
+    </TextBlock>
+    <TextBlock Grid.Row="7" Grid.Column="0" FontSize="{StaticResource Font.Size.Header}" Text="ТЕМА"/>
+    <TextBlock Grid.Row="7" Grid.Column="2" FontSize="{StaticResource Font.Size.Header}" Text="КОНТРАКТ 02 - ЯЩИК ПАНДОРЫ - ПЕРЕГОН СУДНА ПОД ОХРАНЕНИЕМ"/>
+
+    <TextBlock Grid.Row="9" Grid.ColumnSpan="4" FontSize="{StaticResource Font.Size.Header}" TextWrapping="Wrap">
+        КОММЕРЧЕСКАЯ ТАЙНА
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">СОСТОЯНИЕ КОМПАНИИ - ЭТАП ВТОРОЙ</Span>
+        <LineBreak/>
+        <LineBreak/>
+        Phantom Wake ушла с Африканского Рога. Четыре контракта закрыты, компания платёжеспособна, и мы двигаемся на восток через Индийский океан просто потому, что позади заказчики кончились.
+        <LineBreak/>
+        <LineBreak/>
+        Из Аденского залива мы вывезли две вещи, которых нет ни в одном счёте. Первая - E.C.H.O., тихо снятый с серверной палубы MV VAGABOND на первом контракте и теперь вшитый в системы флагмана. Откуда он взялся, он не объясняет. Вторая - вопрос о том, кто оплатил военный постановщик помех и десантный вертолёт ради ржавого контейнеровоза и почему за это до сих пор никто не выставил счёт.
+        <LineBreak/>
+        <LineBreak/>
+        У СИРЕНЫ для них теперь есть название. Они не называют себя никак - по этому и понятно, что они могут себе это позволить. Все, кто натыкался на их чёрные катера, зовут катера ABYSSAL HOUNDS, Гончие Бездны. Сегодня вы познакомитесь с ними как следует.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">СТЕНОГРАММА - ПОСТАНОВКА ЗАДАЧИ</Span>
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[АТЛАС]</Span> Meridian Naval Systems обанкротились, строя идею. Берёшь подержанный ролкер, привариваешь полётную палубу - и получаешь авиабазу за десятую часть цены авианосца, которая выглядит как любое другое корыто на морской линии. Оно работает. В этом и проблема.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[АТЛАС]</Span> Деньгами наш гонорар они выплатить не могут. Денег нет. Они платят самим судном. Выведете его из коридора в NAVPOINT KEYSTONE в международные воды - и MV PANDORA собственность компании, чисто и без обременений.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[СИРЕНА]</Span> Право собственности передано час назад, последние их инженеры сошли на берег с расчётом наличными. На борту теперь только перегонная команда и восемь машин, которыми никто никогда не воевал.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[СИРЕНА]</Span> Нейтральные воды на всём пути. Ни береговой охраны, ни территориальных претензий, некому жаловаться и не на кого. Всё, что случится здесь, не случилось.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.HostileColour}">[ФАРВАТЕР]</Span> Синдикату не нужно уничтожить судно. Оно им нужно. Если такая мелкая компания может вывести в море авиакрыло по цене сухогруза, то это сможет кто угодно, а у людей, которые продают авианосцы, на этот счёт есть мнение. В их боевом распоряжении стоит ЗАХВАТ. Взять на абордаж, увести, и пусть кредиторы Meridian спишут технологию как непоставленный актив.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.HostileColour}">[ФАРВАТЕР]</Span> Применение противокорабельных ракет тем приказом прямо запрещено. Нельзя захватить корпус, который вы отправили на дно. Это единственная хорошая новость в перехвате, и она не переживёт того факта, что вы успели к ней первыми.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.HostileColour}">[ФАРВАТЕР]</Span> Над вашим коридором они поставили самолёт РЭБ, а под ним - рой. Половины того, что вы увидите, не существует. Не доверяйте сегодня радарам, командир. Они показывают то, что кто-то другой решил вам показать.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[E.C.H.O.]</Span> МОДЕЛЬ УГРОЗЫ. ОЦЕНОЧНО ДВЕНАДЦАТЬ ВООРУЖЁННЫХ КАТЕРОВ. ТРИ ГРУППЫ, ТРИ ПЕЛЕНГА. ТОРПЕДНОЕ ВООРУЖЕНИЕ. ДАЛЬНОСТЬ ПЯТЬ С ПОЛОВИНОЙ МИЛИ, БЕЗ НАВЕДЕНИЯ. ЧТОБЫ УБИТЬ, ИМ НУЖНО СБЛИЗИТЬСЯ.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[E.C.H.O.]</Span> ЕЩЁ ШЕСТНАДЦАТЬ КОНТАКТОВ ОЦЕНИВАЮТСЯ КАК БЕСПИЛОТНЫЕ КАТЕРА-ЛОЖНЫЕ ЦЕЛИ. ВООРУЖЕНИЯ НЕТ. ЭКИПАЖА НЕТ. РАДИОЛОКАЦИОННАЯ СИГНАТУРА НА ДИСТАНЦИИ НЕОТЛИЧИМА ОТ НАСТОЯЩЕГО КОРПУСА. ЕДИНСТВЕННЫЙ ДОСТУПНЫЙ МНЕ ПРИЗНАК - СКОРОСТЬ. РЕАЛЬНЫЕ КАТЕРА ИДУТ ЧЕТЫРЕ ПЯТЬ УЗЛОВ. ЛОЖНЫЕ ЦЕЛИ - НЕТ.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[E.C.H.O.]</Span> ГОТОВНОСТЬ ПАЛУБЫ. ПОДГОТОВКА МАШИНЫ ОДИН ПЯТЬ МИНУТ. МАШИНА НА ПАЛУБЕ - ЭТО ПАССАЖИР. ПОДНИМАЙТЕ ДО ПЕРВОГО КОНТАКТА, А НЕ ПОСЛЕ.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[АТЛАС]</Span> Поймите, что нам сейчас передал ФАРВАТЕР, командир. Они шли брать её на абордаж, а не топить. Их машины в воздухе в конфигурации сопровождения абордажной группы. Как только они сообразят, что право собственности уже перешло и красть больше нечего, приказ переиздадут, и всё, что у них там наверху, начнёт искать, что бы себе подвесить.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[АТЛАС]</Span> Юристы Meridian подписали передачу на час раньше срока, потому что хотели получить деньги до прихода ликвидаторов. Этот час - единственная причина, по которой против нас сейчас не полноценная ударная группа. Не растратьте его.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[АТЛАС]</Span> И держите что-нибудь со стволом, который поднимается. Что бы они ни сымпровизировали, пойдёт оно низко, а зенитных ракет у нас нет ни на одном корабле.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">ПОРЯДОК ДЕЙСТВИЙ</Span>
+        <LineBreak/>
+        <LineBreak/>
+        1. (К) Развернуться в зоне вокруг MV PANDORA. Построиться на ней. Она даёт двадцать узлов на полном и не маневрирует.
+        <LineBreak/>
+        2. (К) Сопровождение на восток по транзитному коридору, курс сто тринадцать. Тридцать шесть миль до NAVPOINT KEYSTONE.
+        <LineBreak/>
+        3. (К) Поднять авиацию заранее. Визуальное опознавание - единственный надёжный способ отделить настоящие катера от ложных целей, а после заката - вообще единственный.
+        <LineBreak/>
+        4. (К) Постановщик помех досягаем. Его уничтожение вернёт PANDORA собственные датчики и обрушит ложную картину.
+        <LineBreak/>
+        5. (К) У PANDORA нет никакого вооружения. Ни орудия, ни пусковой, ни даже отстрела помех. Всё, что идёт к ней, идёт через вас.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">ПРИМЕЧАНИЯ</Span>
+        <LineBreak/>
+        <LineBreak/>
+        Оружие свободно. Правил применения на этом контракте нет, и в коридоре нет ничего нейтрального, что стоило бы беречь. Премии за красоту тоже нет. Каждый выстрел сегодня вычитается из гонорара, который платят металлоломом, так что стреляйте по тому, что действительно есть, а призраков пропускайте.
+        <LineBreak/>
+        <LineBreak/>
+        Мы держимся на шестидесяти минутах бумажной работы и чужом невезении. Это не план, это запас. Ведите себя соответственно.
+        <LineBreak/>
+        <LineBreak/>
+        Если приведём её, Phantom Wake перестанет быть компанией с катерами и станет компанией с авиацией. Это дороже, чем четыре предыдущих контракта вместе взятых, и та сторона это понимает.
+        <LineBreak/>
+        <LineBreak/>
+        КОММЕРЧЕСКАЯ ТАЙНА
+        <LineBreak/>
+        УНИЧТОЖИТЬ ПОСЛЕ ПРОЧТЕНИЯ BT
+    </TextBlock>
+</Grid>

@@ -1,0 +1,130 @@
+<Grid
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="10"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="10"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="10"/>
+        <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="10"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="Auto"/>
+    </Grid.ColumnDefinitions>
+
+    <TextBlock Grid.Row="1" Grid.ColumnSpan="4" HorizontalAlignment="Left" FontSize="{StaticResource Font.Size.Header}">
+        SECURE CHANNEL - COMPANY EYES
+        <LineBreak/>
+        Z 061430Z AUG 85
+    </TextBlock>
+
+    <TextBlock Grid.Row="3" Grid.Column="0" FontSize="{StaticResource Font.Size.Header}" Text="FM"/>
+    <TextBlock Grid.Row="3" Grid.Column="2" FontSize="{StaticResource Font.Size.Header}" Text="PHANTOM WAKE CONTRACTS DIV - ATLAS"/>
+    <TextBlock Grid.Row="4" Grid.Column="0" FontSize="{StaticResource Font.Size.Header}" Text="TO"/>
+    <TextBlock Grid.Row="4" Grid.Column="2" FontSize="{StaticResource Font.Size.Header}" Text="{TaskForceName}"/>
+    <TextBlock Grid.Row="5" Grid.Column="0" FontSize="{StaticResource Font.Size.Header}" Text="INFO"/>
+    <TextBlock Grid.Row="5" Grid.Column="2" FontSize="{StaticResource Font.Size.Header}">
+        SIREN - EXTERNAL LIAISON<LineBreak/>
+        E.C.H.O. - TACTICAL SYSTEMS<LineBreak/>
+        UNLISTED THIRD PARTY - SOURCE FAIRWAY
+    </TextBlock>
+    <TextBlock Grid.Row="7" Grid.Column="0" FontSize="{StaticResource Font.Size.Header}" Text="SUBJ"/>
+    <TextBlock Grid.Row="7" Grid.Column="2" FontSize="{StaticResource Font.Size.Header}" Text="CONTRACT 02 - PANDORA'S BOX - HULL DELIVERY UNDER ESCORT"/>
+
+    <TextBlock Grid.Row="9" Grid.ColumnSpan="4" FontSize="{StaticResource Font.Size.Header}" TextWrapping="Wrap">
+        COMMERCIAL IN CONFIDENCE
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">COMPANY STATUS - STAGE TWO</Span>
+        <LineBreak/>
+        <LineBreak/>
+        Phantom Wake has cleared the Horn of Africa. Four contracts closed, the company is solvent, and we are working our way east across the Indian Ocean because the water behind us has run out of clients.
+        <LineBreak/>
+        <LineBreak/>
+        Two things came out of the Gulf of Aden that are not on any invoice. The first is E.C.H.O., lifted quietly off MV VAGABOND's server deck on Contract 01 and now wired into the flagship. It does not explain where it came from. The second is the question of who paid for a military jammer and an assault transport to take a rusted container ship, and why nobody has sent a bill for it.
+        <LineBreak/>
+        <LineBreak/>
+        SIREN has a name for them now. They are calling themselves nothing, which is how you know they can afford to. Everyone who has run into their black boats calls the boats the ABYSSAL HOUNDS. Today you meet them properly.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">TRANSCRIPT - CONTRACT BRIEF</Span>
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[ATLAS]</Span> Meridian Naval Systems went bankrupt building an idea. Take a second-hand roll-on roll-off freighter, weld a flight deck onto her, and you have an air base that costs a tenth of a carrier and looks like every other rust bucket on the sea lane. It works. That is the problem.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[ATLAS]</Span> They cannot pay our fee in money. There is no money. They are paying in the ship. Walk her out of the lane to NAVPOINT KEYSTONE in international water and MV PANDORA is company property, free and clear.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[SIREN]</Span> Title transferred an hour ago and the last of their engineers went ashore with their severance in cash. There is nobody aboard now but a delivery crew and eight aircraft nobody has flown in anger.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[SIREN]</Span> Neutral water the whole way. No coast guard, no territorial claim, nobody to complain to and nobody to complain about you. Whatever happens out here did not happen.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.HostileColour}">[FAIRWAY]</Span> The Syndicate does not want the ship destroyed. They want it. If a company this small can put an air wing to sea for the price of a freighter, then so can everyone, and the people who sell aircraft carriers have opinions about that. Their tasking order reads SEIZURE. Board her, take her, and let Meridian's creditors write the technology off as an asset that was never delivered.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.HostileColour}">[FAIRWAY]</Span> Anti-ship missiles are explicitly prohibited under that order. You cannot capture a hull you have put on the bottom. That is the only good news in this signal, and it will not survive contact with the fact that you got to her first.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.HostileColour}">[FAIRWAY]</Span> They have put a standoff jammer over your lane and a swarm under it. Half of what you will see is not there. Do not trust your radar tonight, Commander. It shows you what somebody else has decided you should see.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[E.C.H.O.]</Span> THREAT MODEL. TWELVE ARMED CRAFT ASSESSED, THREE PACKS, THREE BEARINGS. TORPEDO ARMED. WEAPON RANGE FIVE POINT FIVE MILES, UNGUIDED. THEY MUST CLOSE TO KILL.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[E.C.H.O.]</Span> SIXTEEN FURTHER CONTACTS ASSESSED AS UNMANNED DECOY CRAFT. NO ARMAMENT. NO CREW. RADAR SIGNATURE INDISTINGUISHABLE FROM A REAL HULL AT RANGE. ONLY DISCRIMINATOR AVAILABLE TO ME IS SPEED. REAL CRAFT MAKE FOUR FIVE KNOTS. DECOYS DO NOT.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[E.C.H.O.]</Span> DECK READINESS. AIRFRAME SPIN UP ONE FIVE MINUTES. AN AIRCRAFT ON THE DECK IS A PASSENGER. LAUNCH BEFORE THE FIRST CONTACT, NOT AFTER.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[ATLAS]</Span> Understand what FAIRWAY just handed us, Commander. They came to board her, not to sink her. Their aircraft are in the air rigged for a boarding escort. The moment they work out the title has already transferred and there is nothing left to steal, that order gets reissued, and every airframe they have up there starts looking for something to hang under it.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[ATLAS]</Span> Meridian's lawyers signed her over an hour ahead of schedule because they wanted paying before the liquidators showed up. That hour is the only reason we are not facing a proper strike package. Do not waste it.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[ATLAS]</Span> And keep something with a gun barrel that elevates. Whatever they improvise will come in low, and nothing we own carries a surface to air missile.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">EXECUTION</Span>
+        <LineBreak/>
+        <LineBreak/>
+        1. (C) Deploy in the holding box around MV PANDORA. Form up on her. She makes twenty knots flat out and she does not manoeuvre.
+        <LineBreak/>
+        2. (C) Escort east down the transit lane on course one-one-three. Thirty six miles to NAVPOINT KEYSTONE.
+        <LineBreak/>
+        3. (C) Get aircraft airborne early. Visual identification is the only reliable way to separate the real boats from the decoys, and after sunset it is the only way at all.
+        <LineBreak/>
+        4. (C) The jammer is reachable. Killing it restores PANDORA's own sensors and collapses the false picture.
+        <LineBreak/>
+        5. (C) PANDORA has no weapons of any kind. Not a gun, not a launcher, not a decoy launcher. Everything that comes at her has to go through you.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">REMARKS</Span>
+        <LineBreak/>
+        <LineBreak/>
+        Weapons free. There is no ROE on this contract and nothing neutral in the lane worth protecting. There is also no bonus for style. Every round fired tonight comes out of a fee that is being paid in scrap metal, so shoot what is actually there and let the ghosts go past.
+        <LineBreak/>
+        <LineBreak/>
+        We are running on sixty minutes of paperwork and somebody else's bad luck. That is not a plan, it is a margin. Behave accordingly.
+        <LineBreak/>
+        <LineBreak/>
+        If we bring her in, Phantom Wake stops being a company with boats and becomes a company with an air arm. That is worth more than the last four contracts put together, and the other side knows it.
+        <LineBreak/>
+        <LineBreak/>
+        COMMERCIAL IN CONFIDENCE
+        <LineBreak/>
+        DESTROY AFTER READING BT
+    </TextBlock>
+</Grid>
