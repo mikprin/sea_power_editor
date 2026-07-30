@@ -1,0 +1,70 @@
+<Grid
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="10"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="10"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="10"/>
+        <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="10"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="Auto"/>
+    </Grid.ColumnDefinitions>
+
+    <TextBlock Grid.Row="1" Grid.ColumnSpan="4" HorizontalAlignment="Left" FontSize="{StaticResource Font.Size.Header}">
+        PRIORITY
+        <LineBreak/>
+        Z 160615Z JUL 85
+    </TextBlock>
+
+    <TextBlock Grid.Row="3" Grid.Column="0" FontSize="{StaticResource Font.Size.Header}" Text="FM"/>
+    <TextBlock Grid.Row="3" Grid.Column="2" FontSize="{StaticResource Font.Size.Header}" Text="PHANTOM WAKE CONTRACTS DIV - ATLAS"/>
+    <TextBlock Grid.Row="4" Grid.Column="0" FontSize="{StaticResource Font.Size.Header}" Text="TO"/>
+    <TextBlock Grid.Row="4" Grid.Column="2" FontSize="{StaticResource Font.Size.Header}" Text="{TaskForceName}"/>
+    <TextBlock Grid.Row="5" Grid.Column="0" FontSize="{StaticResource Font.Size.Header}" Text="INFO"/>
+    <TextBlock Grid.Row="5" Grid.Column="2" FontSize="{StaticResource Font.Size.Header}">
+        SIREN - EXTERNAL LIAISON<LineBreak/>
+        E.C.H.O. - TACTICAL SYSTEMS
+    </TextBlock>
+    <TextBlock Grid.Row="7" Grid.Column="0" FontSize="{StaticResource Font.Size.Header}" Text="SUBJ"/>
+    <TextBlock Grid.Row="7" Grid.Column="2" FontSize="{StaticResource Font.Size.Header}" Text="CONTRACT 01-C - RUSTED SPEAR - HULL RECOVERY"/>
+
+    <TextBlock Grid.Row="9" Grid.ColumnSpan="4" FontSize="{StaticResource Font.Size.Header}" TextWrapping="Wrap">
+        COMMERCIAL IN CONFIDENCE
+        <LineBreak/>
+        <LineBreak/>
+        1. (C) SITUATION. A faction of defecting officers from the local regime's navy has seized its own submarine, hull S-311, a Project 641 diesel electric of Soviet build supplied through Tripoli. The crew has renamed her NYOKA. They reached the Zanzibar Channel and got no further. The regime has closed the northern mouth of the channel with a picket line of gun-armed patrol craft and is moving further units down from the north.
+        <LineBreak/>
+        <LineBreak/>
+        2. (C) TERMS. The client cannot pay cash. On delivery of NYOKA to deep water the entire crew and the boat pass to Phantom Wake. This is the first hull the company will not have bought.
+        <LineBreak/>
+        <LineBreak/>
+        3. (C) EXECUTION. Deploy from the holding area north of the channel mouth. Break the picket line, close on NYOKA at her holding position inside the channel, then escort her north to the deep water shelf at NAVPOINT ZULU. There is no requirement to conceal this operation. Drawing fire onto your own hull and away from the submarine is half the task.
+        <LineBreak/>
+        <LineBreak/>
+        4. (C) BATHYMETRY. Channel average depth four zero metres. NYOKA cannot dive to a safe depth inside the channel and will make the entire transit surfaced at no better than sixteen knots. Treat her as a target that cannot manoeuvre and cannot hide.
+        <LineBreak/>
+        <LineBreak/>
+        5. (C) ENEMY. Four patrol craft holding the picket line, assessed as two STENKA and two P6. One interceptor pair expected off the mainland shore once NYOKA is under way. One coastal patrol squadron of three craft inbound from the north. One MI-14 rotary wing patrol out of the northern airfield. No anti-ship missiles are assessed to be present. All hostile craft are gun armed only, which does not make them harmless to a pressure hull at close range.
+        <LineBreak/>
+        <LineBreak/>
+        6. (C) FRIENDLY. {TaskForceName}, plus S-311 NYOKA under company control with weapons set to hold. Her torpedoes are company property as of this morning and will not be spent on patrol boats.
+        <LineBreak/>
+        <LineBreak/>
+        7. (C) REMARKS. Everything the regime sends is cheap and fast and there is a great deal of it. Nothing you are about to shoot at is worth a missile. Close the range and use your guns.
+        <LineBreak/>
+        <LineBreak/>
+        COMMERCIAL IN CONFIDENCE
+        <LineBreak/>
+        DESTROY AFTER READING BT
+    </TextBlock>
+</Grid>
