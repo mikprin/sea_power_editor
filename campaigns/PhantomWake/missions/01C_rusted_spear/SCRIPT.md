@@ -24,15 +24,16 @@ Phase 1: Punching the Hole (The Blockade)
 
     Setup: The player's Task Force spawns outside the bay. The entrance to the bay is patrolled by a stationary picket line of 3-4 light enemy patrol boats (wp_pt_p6 or wp_pt_stenka).
 
-    Action: The player must aggressively engage and destroy the blockade. Stealth is not an option here; the player needs to make noise to draw attention away from the submarine hiding deeper in the bay.
+    Action: The player should aggressively engage and destroy the blockade. Stealth is not an option here; the player needs to make noise to draw attention away from the submarine hiding deeper in the bay.
+    When zone approached, a helicopter spawns and approaches the area of operations. It will be a threat to the player and the submarine, but it can be shot down.
 
 Phase 2: The Slow Crawl (The Escort)
 
     Setup: Once the blockade is cleared, the player approaches the submarine.
 
-    Trigger (Unit Enters Area): When the player is within 2 nautical miles, the submarine powers up its diesel engines and begins moving at a painfully slow 10-12 knots along a pre-assigned waypoint path toward the open ocean.
+    Trigger (Unit Enters Area): When the player is in zone, the submarine goes under player control.
 
-    Action: As soon as the sub starts moving, enemy reinforcements are triggered. 2-3 waves of fast attack crafts spawn from the coastline and rush the convoy.
+    Action: Spawn 2 more patrol boats (same group as used you can copy) that will attempt to intercept the submarine.
 
     Dialogue:
 
