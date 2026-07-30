@@ -35,7 +35,8 @@ This mission relies on close-quarters maneuvering and target identification rath
 
 
 * **The Pirates (Hostiles):**
-* **Action:** 4 fast, lightly armed pirate skiffs (three wp_pt_p4 + one ir_pt_parvin) patrol the search sector on an authored northeast course at Telegraph 4.
+* **Action:** A 4-boat flotilla patrols the search sector on an authored course: one `wp_pt_p4` torpedo boat (group leader, 14.5mm), one `ir_pt_parvin` gun boat (twin 20mm Oerlikon + Bofors 40mm), and two `ir_fab_boghammar` skiffs with **rocket pods emptied** (`_WeaponSystem1` count 0) — 12.7mm machine guns only.
+* **Threat shape:** The two real hulls carry the fight; the skiffs are a close-range gun nuisance. Nothing in the group has anti-ship missiles, so the engagement stays inside gun range, per the "conserve heavy ordnance" restriction.
 * **Behavior:** They are hostile from mission start (`WeaponStatus=Free`), moving under their own orders — not hiding stationary.
 * **Trigger (Aggro):** `UnitDetected` on any one skiff. When the player's sensors actually acquire the flotilla, a warning pops up. No scripted status change — they are already weapons-free and will engage at contact range.
 
