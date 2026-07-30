@@ -312,6 +312,62 @@ fields.
 
 ---
 
+## Free deployment inside the zone
+
+A `Type=Deployment` zone on its own is **only a drawn rectangle** — it does not
+give the player any placement freedom. Free deployment is a separate pair of
+campaign fields, confirmed by counting vanilla: 32 `[MissionN]` entries, 9
+`Generated`, 2 `Replaced`, but only **5** carrying
+
+```ini
+TaskForceModeDeploymentOptions=True
+TaskForceModeDefaultDisposition=Formation    ; or Dispersed
+```
+
+Without them the generator silently parks the whole force on the anchor's
+position and heading and the drawn zone does nothing.
+
+Both fields are now set on all five Phantom Wake missions.
+`Dispersed` on 01A because it is an open-water search; `Formation` everywhere
+else because the other four are escorts or a stand-up fight.
+
+Vanilla `09 Shadows off Palawan` runs `Generated` + `DeploymentOptions=True` +
+four `TaskForceModeIgnoreUnit` vessels simultaneously, which is exactly this
+mission's shape — so the Pandora being author-placed is not in tension with the
+player placing their own hulls freely.
+
+### Two geometry conflicts this exposed
+
+Free placement means a player can start anywhere inside the box, so **every
+positional trigger watching `Taskforce1Vessel1` had to be re-checked against the
+box's corners, not just against the anchor.** Two missions failed that check and
+were fixed:
+
+| Mission | Problem | Fix |
+|---|---|---|
+| **01 Rusted Waters** | Box reached X -14.0; Trigger2's rendezvous circle covers X -15.5..-9.5. Deploying in the north-east corner satisfied the rendezvous on frame 1 — the Vagabond went Blue immediately and the entire "catch up with her" opening was skipped. | Box moved 2 NM west, `GeoPoint` lon 43.633711 → 43.600000. Now clears by 0.49 NM. |
+| **01C Rusted Spear** | Box's southern edge sits at Z 34, exactly 8 NM from Trigger2's centre — tangent to the old `AreaRadiusNM=8`. A hull placed on that edge could launch the Mi-14 before the player moved. | Radius 8 → 6. Fires at Z 32, 2 NM south of the box. Helicopter ingress 31 → 33 NM. |
+
+02 Pandora's Box needed no change: **every gate in it watches
+`Taskforce1Vessel3`**, the author-placed Pandora, which free deployment does not
+touch. That was not deliberate foresight, but it is a good argument for gating
+escort missions on the escortee rather than on the player's flagship.
+
+Post-fix clearance for all five, measured from the nearest box corner to each
+`Taskforce1Vessel1` circle:
+
+```
+01   Trigger2  clears by 0.49 NM
+01A  Trigger2  clears by 60.44 NM
+01B  Trigger2  clears by 0.71 NM
+01C  Trigger2  clears by 2.00 NM
+02             no Vessel1 positional gates at all
+```
+
+Anchors verified still inside their boxes. 01B was checked hardest, since it is
+the stealth contract where entering a radar lobe is an instant fail — nearest
+lethal lobe is 5.01 NM outside the box.
+
 ## Campaign wiring
 
 `campaign.ini` gained `[Mission5]`, `NumberOfMissions=4 → 5`.
