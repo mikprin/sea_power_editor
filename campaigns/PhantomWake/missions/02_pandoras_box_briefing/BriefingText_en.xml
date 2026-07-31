@@ -61,7 +61,7 @@
         <Span Foreground="{StaticResource NTDS.FriendColour}">[ATLAS]</Span> Meridian Naval Systems went bankrupt building an idea. Take a second-hand roll-on roll-off freighter, weld a flight deck onto her, and you have an air base that costs a tenth of a carrier and looks like every other rust bucket on the sea lane. It works. That is the problem.
         <LineBreak/>
         <LineBreak/>
-        <Span Foreground="{StaticResource NTDS.FriendColour}">[ATLAS]</Span> They cannot pay our fee in money. There is no money. They are paying in the ship. Walk her out of the lane to NAVPOINT KEYSTONE in international water and MV PANDORA is company property, free and clear.
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[ATLAS]</Span> They cannot pay our fee in money. There is no money. They are paying in the ship. Walk her across to the handover point and MV PANDORA is company property, free and clear. It is a long passage and there is no short way round it.
         <LineBreak/>
         <LineBreak/>
         <Span Foreground="{StaticResource NTDS.FriendColour}">[SIREN]</Span> Title transferred an hour ago and the last of their engineers went ashore with their severance in cash. There is nobody aboard now but a delivery crew and eight aircraft nobody has flown in anger.
@@ -79,7 +79,7 @@
         <Span Foreground="{StaticResource NTDS.HostileColour}">[FAIRWAY]</Span> They have put a standoff jammer over your lane and a swarm under it. Half of what you will see is not there. Do not trust your radar tonight, Commander. It shows you what somebody else has decided you should see.
         <LineBreak/>
         <LineBreak/>
-        <Span Foreground="{StaticResource NTDS.FriendColour}">[E.C.H.O.]</Span> THREAT MODEL. TWELVE ARMED CRAFT ASSESSED, THREE PACKS, THREE BEARINGS. TORPEDO ARMED. WEAPON RANGE FIVE POINT FIVE MILES, UNGUIDED. THEY MUST CLOSE TO KILL.
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[E.C.H.O.]</Span> THREAT MODEL. TWELVE ARMED CRAFT ASSESSED, THREE PACKS, THREE BEARINGS. ALL THREE ARE ALREADY UNDER WAY AND CONVERGING ON OUR TRACK. TORPEDO ARMED. WEAPON RANGE FIVE POINT FIVE MILES, UNGUIDED. THEY MUST CLOSE TO KILL. THERE IS NO COURSE THAT AVOIDS THEM.
         <LineBreak/>
         <LineBreak/>
         <Span Foreground="{StaticResource NTDS.FriendColour}">[E.C.H.O.]</Span> SIXTEEN FURTHER CONTACTS ASSESSED AS UNMANNED DECOY CRAFT. NO ARMAMENT. NO CREW. RADAR SIGNATURE INDISTINGUISHABLE FROM A REAL HULL AT RANGE. ONLY DISCRIMINATOR AVAILABLE TO ME IS SPEED. REAL CRAFT MAKE FOUR FIVE KNOTS. DECOYS DO NOT.
@@ -100,9 +100,9 @@
         <Span Foreground="{StaticResource NTDS.FriendColour}">EXECUTION</Span>
         <LineBreak/>
         <LineBreak/>
-        1. (C) Deploy in the holding box around MV PANDORA. Form up on her. She makes twenty knots flat out and she does not manoeuvre.
+        1. (C) Deploy anywhere in the box around MV PANDORA. Form up on her. She makes twenty knots flat out and she does not manoeuvre.
         <LineBreak/>
-        2. (C) Escort east down the transit lane on course one-one-three. Thirty six miles to NAVPOINT KEYSTONE.
+        2. (C) Escort east on course one-one-three. Thirty nine miles to the edge of the handover area. Expect first contact around the one hour mark whatever route you take, and expect to still be fighting when you cross the line.
         <LineBreak/>
         3. (C) Get aircraft airborne early. Visual identification is the only reliable way to separate the real boats from the decoys, and after sunset it is the only way at all.
         <LineBreak/>
