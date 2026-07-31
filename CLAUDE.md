@@ -1,10 +1,11 @@
 # Sea Power mission authoring — field notes
 
-Things learned by reading the vanilla `pacific-strike-task-force` campaign that are
-**missing from, or contradict**, `Mission_Creation_Community_Guide.md` and
-`Task_Force_Campaign_Guide.md`. Everything below was verified against real files
-under `campaigns/pacific-strike-task-force/`; where something is inferred rather
-than confirmed it says so.
+Things learned by reading vanilla campaigns that are **missing from, or contradict**,
+`Mission_Creation_Community_Guide.md` and `Task_Force_Campaign_Guide.md`. Everything
+below was verified against real files under `campaigns/pacific-strike-task-force/`
+and `share/OriginalMissions/{Linear1,Molina}` (the full original 11-mission vanilla
+set — checked later, so referenced only in the sections that cite it by path); where
+something is inferred rather than confirmed it says so.
 
 Read this before writing a mission `.ini`. It is cheaper than re-deriving it.
 
@@ -323,6 +324,7 @@ editor artifact and is ignored for surface units; `0` is fine.
 | `HomeBase=Taskforce2Vessel1` | where a helo recovers |
 | `CampaignTag=wp_rkr_slava_Variant1` | required for Task Force Mode persistence tracking |
 | `CampaignRepair=True` | unit is repairable between missions |
+| `CampaignRearm=True` | unit is rearmed between missions — seen paired with `CampaignTag` on enemy units in `share/OriginalMissions/Linear1/04B Bargaining Chips - Red.ini` and `Molina/04 Chagos Gambit.ini` |
 | `SetSelected=True` | unit selected when the mission opens |
 | `CallsignIndex=` | picks a specific callsign from the unit's list |
 | `TaskForceModeIgnoreUnit` | exempt a unit from generator replacement |
@@ -765,29 +767,70 @@ position into **along-track and cross-track** components relative to the
 start→objective axis. Groups that look well spread on the map often turn out to
 share one cross-track lane, which is a single tooth rather than a comb.
 
-### `[Debug]` block gates enemy attack, not enemy AI
+### `[Debug]` block: `DisableEnemyAIPlayer=True` is mandatory vanilla boilerplate
 
-Not in either guide, not in any vanilla pacific-strike mission — sourced from
-`docs/examples_from_dev/MissionFileInformation.ini:17-36`:
+Not in either guide, not in `campaigns/pacific-strike-task-force/` — but check
+`share/OriginalMissions/{Linear1,Molina}/*.ini` (the original 11-mission campaigns,
+a separate source from the scraped pacific-strike set) and **every single one** opens
+with:
 
 ```ini
 [Debug]
-AllowEnemyUnitsAttackPlayer=False   ; default True — enemy AI won't fire on the player at all
-EnemyWeaponStatus=Tight             ; overrides WeaponStatus for every EnemyTaskforce unit
-AllowControlOfEnemyUnits=False      ; default — dev-only, lets you fly enemy units
+DisableEnemyAIPlayer=True
 ```
 
-`AllowEnemyUnitsAttackPlayer=False` only suppresses attacks on the player — it does not
-disable a unit's own sensors, point defense, or ECM (nothing in the file ties those
-systems to it). Useful for scripting a scene where hostiles must not shoot early
-without touching their `WeaponStatus=` per-unit. `EnemyWeaponStatus` is the blunt,
-mission-wide version of the per-unit `WeaponStatus=` field (§10) — use it to silence
-an entire side at once rather than editing every unit section.
+11/11 files, no exceptions, no other key ever present in that block. This is not
+optional flavor — it is load-bearing boilerplate every shipped mission carries.
 
-### `MissionType` — only `Patrol` is verified
+Mechanism is **not documented anywhere** (no dev comment, no guide text), so treat
+the following as a hypothesis, not a verified fact: the engine has an
+operational/strategic AI layer above individual units (re-tasking task forces,
+launching on its own initiative) and `DisableEnemyAIPlayer=True` turns that layer
+off so the enemy sticks to the mission's scripted waypoints and triggers instead of
+improvising. Per-unit "micro" behavior — point defense, decoy/chaff, ECM, weapons
+engagement within `WeaponStatus=` — is presumed to keep running regardless, since
+nothing in any file ties those systems to this flag, but that presumption is
+untested. This is consistent with §18's top-level finding ("no fleet-level AI,
+detection does not re-task anything") — the flag may simply be making explicit what
+the engine barely does anyway at this scale.
 
-`grep -h "^MissionType=" *.ini | sort | uniq -c` over the vanilla campaign returns
-**`18 MissionType=Patrol`** and nothing else. The community guide only ever shows
-`NoMission`. Values like `AntiSurface` appear in neither. An unrecognised enum
-probably leaves the unit with no AI mission at all, so hostile combatants that
-behave inertly are worth re-checking here first.
+`docs/examples_from_dev/MissionFileInformation.ini:17-36` documents a *different*
+pair of `[Debug]` fields — `AllowEnemyUnitsAttackPlayer=False` (blocks the enemy from
+attacking the player at all) and `EnemyWeaponStatus=Tight` (mission-wide override of
+per-unit `WeaponStatus=`, §10). Neither appears in any of the 11 shipped missions
+checked. They're real (dev-documented), just not what production missions actually
+use — `DisableEnemyAIPlayer` is the one that matters in practice.
+
+### `MissionType` — full vanilla vocabulary, corrected
+
+Earlier version of this note only checked `campaigns/pacific-strike-task-force/`
+(18× `Patrol`, nothing else) and wrongly treated other values as unattested.
+`share/OriginalMissions/{Linear1,Molina}/*.ini` (11 more vanilla missions) has the
+real spread:
+
+```
+44  NoMission
+28  AntiSurface
+12  Patrol
+12  AntiAir
+ 1  AntiCarrier
+ 1  AntiShip
+```
+
+So `AntiSurface`/`AntiAir`/`AntiCarrier`/`AntiShip` are real, used values, not
+guesses or invalid enums — PhantomWake's own use of `AntiSurface` (6×) is
+unremarkable, not a risk. Pattern by mission shape: strike/ambush missions
+(`04A/04B Bargaining Chips`, `05A/05B`) lean on `NoMission` + scripted `Attack=`
+triggers (community guide, already documented) or narrow `AntiSurface`/`AntiAir`
+taskings; recon/hunter missions (`01 Operation Shadow`, `02 Operation Revenge`) use
+`Patrol` on the side that has to go find something.
+
+Behavioral claim, still unverified by any doc or comment, only by usage pattern:
+`NoMission` = hold position or run the waypoint route, react in place per
+`WeaponStatus` but never leave the route to chase; `Patrol` = actively search,
+allowed to break off waypoints to close on and prosecute a detected contact, then
+resume. Fits `01 Operation Shadow.ini`: the USSR SAG (`Taskforce2`, 6 vessels) is
+set `MissionType=Patrol` throughout, and the mission's own briefing frames it as
+hunting the player's Norwegian submarines in the Barents Sea — a group that's
+supposed to search needs `MissionType=Patrol`, not just `WeaponStatus=Free`, if this
+distinction is real.
