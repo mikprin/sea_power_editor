@@ -13,5 +13,10 @@ rn_dd_z-class,Z-class,80,WW2 era artillery destroyer
 rn_dd_c-class,C-class,80,WW2 era artillery destroyer
 rn_dd_battle,Battle-class,90,Air defense destroyer
 usn_dd_gearing,Gearing-class FRAM I,130,Modernized destroyer with ASW
+ins_pt_saar,Saar 1-class,40,Contract 02 unlock - gun-armed FAC
+ins_ptg_saar_2,Saar 2-class,85,Contract 02 unlock - Gabriel-armed missile boat
+ins_ptg_aliya,Aliya-class,100,Contract 02 unlock - Harpoon/Gabriel missile boat
+ins_ptg_hetz,Hetz-class,110,Contract 02 unlock - Harpoon/Gabriel missile boat with CIWS
+wp_mpk_grisha3,Grisha III-class,145,Contract 02 unlock - SA-N-4 SAM corvette
 wp_ss_foxtrot,Project 641 Foxtrot,110,Awarded by 01C - diesel electric submarine
 wp_ms_roro_b,ARAPAHO type RO-RO,120,Awarded by 02 - unarmed mobile air base

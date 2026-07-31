@@ -98,6 +98,15 @@ def cmd_search(args) -> None:
     if not rows:
         print("no matches")
         return
+
+    if args.output:
+        with open(args.output, 'w', newline='', encoding='utf-8') as f:
+            writer = csv.DictWriter(f, fieldnames=rows[0].keys())
+            writer.writeheader()
+            writer.writerows(rows)
+        print(f"wrote {len(rows)} rows to {args.output}")
+        return
+
     for u in rows:
         span = f"{u['service_from']}-{u['service_to']}" if u["service_from"] else "?"
         extra = u["role"] or u["loadouts"]
@@ -165,6 +174,15 @@ def cmd_variants(args) -> None:
     if not rows:
         print("no variants match those filters")
         return
+
+    if args.output:
+        with open(args.output, 'w', newline='', encoding='utf-8') as f:
+            writer = csv.DictWriter(f, fieldnames=rows[0].keys())
+            writer.writeheader()
+            writer.writerows(rows)
+        print(f"wrote {len(rows)} rows to {args.output}")
+        return
+
     for v in rows[: args.limit]:
         print(f"{v['variant']:<12} {v['nation']:<14} "
               f"{v['service_date']:<12} {v['hullnumber']}")
@@ -190,6 +208,15 @@ def cmd_arsenal(args) -> None:
     if not rows:
         print(f"{u['alias']} carries no ammunition")
         return
+
+    if args.output:
+        with open(args.output, 'w', newline='', encoding='utf-8') as f:
+            writer = csv.DictWriter(f, fieldnames=rows[0].keys())
+            writer.writeheader()
+            writer.writerows(rows)
+        print(f"wrote {len(rows)} rows to {args.output}")
+        return
+
     ammo = {a["alias"]: a for a in load(AMMO_CSV)}
     print(f"{u['alias']}:")
     for w in rows:
@@ -216,6 +243,15 @@ def cmd_ammo(args) -> None:
     if not hits:
         print("no matches")
         return
+
+    if args.output:
+        with open(args.output, 'w', newline='', encoding='utf-8') as f:
+            writer = csv.DictWriter(f, fieldnames=hits[0].keys())
+            writer.writeheader()
+            writer.writerows(hits)
+        print(f"wrote {len(hits)} rows to {args.output}")
+        return
+
     if len(hits) == 1:
         a = hits[0]
         print(f"Ammunition1={a['alias']}")
@@ -374,6 +410,7 @@ def main() -> None:
     s.add_argument("--category", help="vessels|aircraft|land_units|biologic")
     s.add_argument("--nation")
     s.add_argument("--year", type=int)
+    s.add_argument("--output", help="write results to CSV file")
     s.set_defaults(func=cmd_search)
 
     s = sub.add_parser("show", help="spec card for one alias")
@@ -385,6 +422,7 @@ def main() -> None:
     s.add_argument("--nation")
     s.add_argument("--year", type=int)
     s.add_argument("--limit", type=int, default=40)
+    s.add_argument("--output", help="write results to CSV file")
     s.set_defaults(func=cmd_variants)
 
     s = sub.add_parser("loadouts", help="valid LoadoutVariant values")
@@ -396,12 +434,14 @@ def main() -> None:
 
     s = sub.add_parser("arsenal", help="what a unit carries, by weapon system")
     s.add_argument("alias")
+    s.add_argument("--output", help="write results to CSV file")
     s.set_defaults(func=cmd_arsenal)
 
     s = sub.add_parser("ammo", help="ordnance stats and who carries it")
     s.add_argument("query", nargs="?", default="")
     s.add_argument("--type", help="Missile|Torpedo|Bomb|Projectile|RBU|ASROC|...")
     s.add_argument("--target", help="AAW|ASuW|ASW")
+    s.add_argument("--output", help="write results to CSV file")
     s.set_defaults(func=cmd_ammo)
 
     s = sub.add_parser("check", help="validate unit refs in a mission .ini")
