@@ -84,54 +84,87 @@ Map centre `19.92 / 67.88`, unchanged. Open water, no land in the playfield.
 X = (lon - 67.88) * 60      Z = (lat - 19.92) * 60
 ```
 
-Every hostile position, heading, telegraph and waypoint below is transcribed
-verbatim from `share/02_pandoras_box.ini`.
+The player's side and the neutrals are exactly as hand-placed. The hostiles kept
+their hand-drawn *shape* but were re-laid after the second playtest — see
+"Second pass" below.
 
 | Element | NM | Notes |
 |---|---|---|
-| Deployment box | X −12..8, Z −73.7..−23.7 | hand-placed, 20 × 50 |
+| Deployment box | X −4.4..10.6, Z −57.6..−37.6 | hand-placed, 15 × 20 |
 | MV Pandora start | (−4.58, −45.14) hdg 113 | hand-placed |
-| Pandora route | → (21.48, −56.22) → (67.35, −77.37) | hand-drawn, 78.8 NM |
-| Handover circle | (67.35, −77.37) r=40 | centre moved onto WP2, radius as placed |
-| Pack one | (60, −57) → (38.57, −60.85) → (2.52, −43.03) | 59 NM run-in |
-| Pack two | (42.23, −84.7) → (36.72, −64.56) → (−1.45, −47.74) | 57 NM run-in |
-| Pack three | (69.48, −59.64) → (40.51, −64.26) → (−2.03, −44.95) | 73 NM run-in |
-| Support group | (53.36, −76.24) → … → (−0.35, −54.54) | hand-drawn, runs west into the convoy's water |
-| Jammer | (110.52, 20000, 92.27) + hand-drawn orbit | `Loop` appended |
+| Pandora route | → (21.48, −56.22) → (67.35, −77.37) | hand-drawn |
+| Handover circle | (65.62, −76.10) r=22 | `MapSymbol_New1` and `Trigger12` must agree |
+| Pack one | (40.31, −47.45) → (30.13, −40.78) → (11.24, −39.00) → (21.63, −50.14) → Loop | north lane |
+| Pack two | (21.10, −76.14) → (11.14, −73.93) → (−2.10, −59.35) → (13.13, −59.51) → Loop | south lane |
+| Pack three | (38.32, −61.87) → (26.31, −54.39) → (3.76, −51.00) → (19.43, −60.10) → Loop | centre lane |
+| Support group | (41.36, −70.95) → (33.62, −63.33) → (24.21, −65.21) → (−1.75, −53.92) | last obstacle before the circle |
+| Jammer | (110.52, 20000, 92.27) + hand-drawn orbit, shifted 25 NM south | `Loop` appended |
 
-Only two things changed:
+### Along / cross — the coordinate frame that matters
 
-- **Pandora `Telegraph` 4 → 5**, so the passage runs at her 20 kt maximum
-  rather than about 16.
-- **`Loop` appended to the jammer's waypoint list**, so it works the sector
-  instead of flying off the end of the last leg.
-
-### Runtime — the marker was moved, deliberately
-
-The handover marker originally sat at `(101.76, −94.97)`, which put the circle
-edge **77.5 NM** down the route — **3 h 52 m** at the Pandora's twenty knots,
-of which the last two hours were empty ocean with the fight long finished.
-
-The centre is now the **Pandora's own second waypoint**, `(67.35, −77.37)`,
-with the hand-placed r=40 untouched:
+Raw X/Z hides whether a picket actually covers the crossing. Decompose every
+position relative to the **start → handover-circle axis**:
 
 ```
-leg 1  start -> WP1                28.32 NM
-leg 2  WP1 -> circle edge          10.51 NM   (WP1 is 50.51 NM from the centre)
-                                   -------
-                                   38.82 NM   = 1 h 56 m at 20 kt
+axis   S = (-4.58, -45.14)  ->  C = (65.62, -76.10)      |SC| = 76.73 NM
+along  = distance down that axis          cross = offset perpendicular to it
+entry  = 76.73 - 22 = 54.73 NM along      = 2 h 44 m at the Pandora's 20 kt
 ```
 
-Steering direct instead of via the waypoint is also 38.82 NM, so there is no
-corner to cut. The crossing point falls at NM `(31.0, −60.6)`, which is 27 to
-39 NM from every hostile start — the packs have closed long before the player
-gets there, and pack three is likely still inbound when the line is crossed.
+The direct course and the two-waypoint course are both 54.73 NM to the circle
+edge, so there is no corner to cut.
 
-Shape of the mission now: **~1 h approach, ~1 h fighting, cross the line while
-still in contact.**
+| Group | along | cross |
+|---|---|---|
+| Decoy groups (V28–37) | 26–28 | −17 … +22 |
+| Loose decoys (V16–27) | 28–43 | −10 … +19 |
+| Pack two (south) | 35 | −18, sweeps −20 … −6 |
+| Pack one (north) | 42 | +16, sweeps +18 … +6 |
+| Pack three (centre) | 46 | +2, sweeps +4 … −4 |
+| Support group | 53 | −5 |
+| Strike helicopters | 59–61 | −6 |
 
-`MapSymbol_New1` and `Trigger12` must stay in step; the validation script
-asserts they agree in both position and radius.
+The efficient corridor (the fan of direct routes that reach the circle) is only
+±12 NM of cross at 40 NM along. With ~15 NM of nav radar per pack, the three
+lanes screen roughly cross −35 … +33 — about three times the corridor width.
+
+### Second pass — three defects, all mine
+
+The first de-scripted build was still dodgeable. Causes, in order of size:
+
+1. **The packs were slower than the ship they were hunting.** `Telegraph=3` on an
+   engine-default hull is 15 kt; MV Pandora does 20 kt at `Telegraph=5`. Pack
+   one's first waypoint carried `/SetTelegraph,2` — 10 kt. 48-knot torpedo boats
+   were closing at 15 and 10 knots and could never catch anything. Now
+   `Telegraph=4` (20 kt) with `/SetTelegraph,5` (48 kt) on the inbound leg and
+   `UnlimitedFuel=True`. This is now written up in `docs/CLAUDE.md` §18.
+2. **The comb converged to one line.** All three leader routes terminated in the
+   player's start area, which put every pack within 5 NM of the same cross-track
+   lane. Each pack now owns a lane and zigzags in it on `Loop`, so they screen a
+   front instead of a line, and they never run out of route and park.
+3. **The run-up was 60–75 NM.** Every hostile group is compressed toward the
+   player along the axis — packs 60–75 → 36–46, decoys 42–58 → 25–38, support
+   group 66 → 52 (still outside the 22 NM circle, so it stays the *last*
+   obstacle). First radar contact now lands near 40 minutes instead of 100.
+
+Also changed:
+
+- **`MissionType` `AntiSurface` → `Patrol` on every hostile.** `AntiSurface`
+  appears nowhere in vanilla and nowhere in the community guide; `Patrol` is the
+  only value vanilla uses (18 occurrences). Suspected cause of inert AI. Trivial
+  to revert if it changes nothing.
+- **Jammer patrol shifted 25 NM south.** Measured in cross, every waypoint of the
+  editor route sat 22–31 NM *north* of the convoy corridor — the EKA-3B never
+  overflew the lane it was supposed to be covering. The loop now straddles it
+  (cross −3 … +6).
+- **Pandora `Telegraph` 4 → 5**, so the passage runs at her 20 kt maximum.
+
+### Known cost
+
+The handover circle is r=22, which puts the passage at **2 h 44 m** at 20 kt.
+Widening it to r=30 would bring that to 2 h 20 m at the price of a wider entry
+front. Left at 22 for now; the fight starts around 40 minutes in, so the empty
+stretch is at the end rather than the beginning.
 
 ---
 

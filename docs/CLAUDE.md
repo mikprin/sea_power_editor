@@ -663,3 +663,121 @@ Ammunition notes:
 
 Everything under `StreamingAssets/original/` that matters for mission authoring is
 now indexed.
+
+---
+
+## 18. Enemy AI — what it will and will not do
+
+Derived while debugging a mission the player could complete without firing a shot,
+by sailing around everything. Every claim here is from the vanilla files or the
+unit data; where it is inference it says so.
+
+### There is no fleet-level AI. Detection does not re-task anything.
+
+Sea Power's AI is **unit-level**: a unit follows its waypoints, and engages when it
+personally has a valid detected target in range. There is no enemy commander that
+notices the player and vectors groups at them. "The enemy spots me, so the enemy
+sends its boats after me" **does not happen**, no matter how good the enemy's
+sensors are. A shared contact only helps units that can already shoot that far.
+
+Vanilla never relies on emergent pursuit. The one case of hostile ships changing
+plan is scripted — `05 Strike on the Monster.ini` Trigger5, where the Kirov turns
+north once its search aircraft are all dead:
+
+```ini
+Condition_Condition1_Type=UnitDestroyed
+Condition_Condition1_Units=Taskforce2Aircraft3,Taskforce2Aircraft4,Taskforce2Helicopter1,Taskforce2Helicopter2
+Condition_Condition1_MinimumUnits=4
+Action_Units=Taskforce2Vessel1
+Action_UnitWaypoints=-173.4142,220.4727,320.6888
+```
+
+So a `UnitDetected` → `Action_UnitWaypoints` re-vector is legitimate and
+un-dodgeable (a detection is not a place). But `Action_UnitWaypoints` re-tasks to
+**fixed coordinates**, so it is a one-time redirect to a guess, not a chase.
+`04 Sunda Strait.ini` Trigger7 uses the same action on friendly aircraft.
+
+### Telegraph is the throttle, and the default table is slow
+
+This is the trap that eats scripted intercepts. `Telegraph=` is not a percentage of
+max speed. About 50 hulls override `TelegraphVelocities` in `[Physics]`, and the
+overwhelmingly common shape is **fixed absolute knots for T1–T4 with only T5
+scaling to the hull's maximum**:
+
+```
+TelegraphVelocities=-7,0,5,10,15,20,35        ; astern,stop,T1,T2,T3,T4,T5
+TelegraphVelocities=-5,0,5,10,15,20,24
+TelegraphVelocities=-7,0,5,10,15,20,41
+```
+
+Hulls with no override use an engine default not present in the files, but the
+override population strongly implies the same table. Practical rule:
+
+| Telegraph | knots |
+|---|---|
+| 1 | ~5 |
+| 2 | ~10 |
+| 3 | ~15 |
+| 4 | ~20 |
+| 5 | max speed |
+
+**`Telegraph=3` is 15 kt on a 48 kt torpedo boat.** The editor writes `Telegraph=3`
+by default, so a hand-built pursuit force ships at 15 kt and cannot catch anything
+faster than a freighter. Check the chase arithmetic against the *target's* speed,
+not the hull's max, and use `Telegraph=5` or a `/SetTelegraph,5` waypoint command
+on the run-in. `UnlimitedFuel=True` on anything expected to sprint.
+
+### Small combatants are effectively blind
+
+`tools/units.py show` gives max speed, but sensor fit needs the raw unit file.
+`wp_pt_libelle`, a typical fast attack craft, carries:
+
+```
+[SensorSystem1] Type=Visual  Optics        VisualIdentificationRange=7.5
+[SensorSystem2] Type=Radar   Nav_Radar
+```
+
+Optics and a navigation radar. No search radar, no ESM. A picket of these detects
+nothing at 30–40 NM. If the design needs the enemy to *find* the player, something
+on that side has to carry a real sensor — an MPA, an AEW aircraft, or an ELINT
+platform whose track feeds the units that can shoot at range.
+
+### Straight-running torpedoes need a firing solution, not just proximity
+
+`wp_53-38` is 5.5 NM, 34 kt, `GuidanceType` none. An unguided torpedo against a
+manoeuvring 20 kt target means the boat has to get inside a few miles *and* achieve
+a lead angle. Torpedo-armed fast attack craft are a knife fight, not a threat
+envelope — budget them accordingly.
+
+### Vanilla solves "the player can just sail around it" with geography
+
+Survey of all 14 Pacific Strike missions by victory condition:
+
+| Win condition | Missions |
+|---|---|
+| `UnitDestroyed` (kill something) | **10** |
+| `UnitsInTheArea` (reach a point) | 4 |
+
+The four that ask the player to reach a point are `03A Run Silent Run Deep`
+(submarine, 0 land units), `03 Running the Palawan Passage` (8 coastal land units),
+`04 Sunda Strait` (3), `09 Shadows off Palawan` (26). All are straits or coastal
+transits where terrain and shore batteries do the containing.
+
+**Vanilla never asks the player to cross open ocean to a point past a mobile
+threat**, because mobile threats cannot seal open ocean. If a mission must do it,
+the design has to supply the walls itself: a small win circle, screening groups
+spread across the *crossing width* rather than converging on the direct line, and
+enough speed on those groups to convert a detection into an engagement.
+
+Useful geometry check before shipping such a mission — decompose every hostile
+position into **along-track and cross-track** components relative to the
+start→objective axis. Groups that look well spread on the map often turn out to
+share one cross-track lane, which is a single tooth rather than a comb.
+
+### `MissionType` — only `Patrol` is verified
+
+`grep -h "^MissionType=" *.ini | sort | uniq -c` over the vanilla campaign returns
+**`18 MissionType=Patrol`** and nothing else. The community guide only ever shows
+`NoMission`. Values like `AntiSurface` appear in neither. An unrecognised enum
+probably leaves the unit with no AI mission at all, so hostile combatants that
+behave inertly are worth re-checking here first.
