@@ -714,7 +714,6 @@ Hulls with no override use an engine default not present in the files, but the
 override population strongly implies the same table. Practical rule:
 
 | Telegraph | knots |
-|---|---|
 | 1 | ~5 |
 | 2 | ~10 |
 | 3 | ~15 |
@@ -733,7 +732,7 @@ on the run-in. `UnlimitedFuel=True` on anything expected to sprint.
 `wp_pt_libelle`, a typical fast attack craft, carries:
 
 ```
-[SensorSystem1] Type=Visual  Optics        VisualIdentificationRange=7.5
+[SensorSystem1] Type=Visual  Optics        VisualIdentificationRange~7.5
 [SensorSystem2] Type=Radar   Nav_Radar
 ```
 
@@ -742,19 +741,11 @@ nothing at 30–40 NM. If the design needs the enemy to *find* the player, somet
 on that side has to carry a real sensor — an MPA, an AEW aircraft, or an ELINT
 platform whose track feeds the units that can shoot at range.
 
-### Straight-running torpedoes need a firing solution, not just proximity
-
-`wp_53-38` is 5.5 NM, 34 kt, `GuidanceType` none. An unguided torpedo against a
-manoeuvring 20 kt target means the boat has to get inside a few miles *and* achieve
-a lead angle. Torpedo-armed fast attack craft are a knife fight, not a threat
-envelope — budget them accordingly.
-
 ### Vanilla solves "the player can just sail around it" with geography
 
 Survey of all 14 Pacific Strike missions by victory condition:
 
 | Win condition | Missions |
-|---|---|
 | `UnitDestroyed` (kill something) | **10** |
 | `UnitsInTheArea` (reach a point) | 4 |
 
@@ -773,6 +764,25 @@ Useful geometry check before shipping such a mission — decompose every hostile
 position into **along-track and cross-track** components relative to the
 start→objective axis. Groups that look well spread on the map often turn out to
 share one cross-track lane, which is a single tooth rather than a comb.
+
+### `[Debug]` block gates enemy attack, not enemy AI
+
+Not in either guide, not in any vanilla pacific-strike mission — sourced from
+`docs/examples_from_dev/MissionFileInformation.ini:17-36`:
+
+```ini
+[Debug]
+AllowEnemyUnitsAttackPlayer=False   ; default True — enemy AI won't fire on the player at all
+EnemyWeaponStatus=Tight             ; overrides WeaponStatus for every EnemyTaskforce unit
+AllowControlOfEnemyUnits=False      ; default — dev-only, lets you fly enemy units
+```
+
+`AllowEnemyUnitsAttackPlayer=False` only suppresses attacks on the player — it does not
+disable a unit's own sensors, point defense, or ECM (nothing in the file ties those
+systems to it). Useful for scripting a scene where hostiles must not shoot early
+without touching their `WeaponStatus=` per-unit. `EnemyWeaponStatus` is the blunt,
+mission-wide version of the per-unit `WeaponStatus=` field (§10) — use it to silence
+an entire side at once rather than editing every unit section.
 
 ### `MissionType` — only `Patrol` is verified
 
