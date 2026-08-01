@@ -40,7 +40,7 @@
 		<TextBlock Foreground="{StaticResource NTDS.FriendColour}" Text="сетка 10 миль - суши в радиусе 200 миль нет" FontSize="10" FontStyle="Italic" Opacity="0.45" Canvas.Left="14" Canvas.Top="552"/>
 
 		<TextBlock Foreground="{StaticResource NTDS.UnknownColour}" Text="ТРОПИЧЕСКАЯ ДЕПРЕССИЯ - СТОИТ НАД КОРИДОРОМ" FontSize="14" FontWeight="Bold" Opacity="0.8" Canvas.Left="300" Canvas.Top="18"/>
-		<TextBlock Foreground="{StaticResource NTDS.UnknownColour}" Text="волнение 7 - видимость менее 0.5 мили - луны нет - пассивный сонар неработоспособен" FontSize="10" Opacity="0.7" Canvas.Left="300" Canvas.Top="38"/>
+		<TextBlock Foreground="{StaticResource NTDS.UnknownColour}" Text="волнение 7 - видимость менее 0.5 мили - работоспособность сонара снижена" FontSize="10" Opacity="0.7" Canvas.Left="300" Canvas.Top="38"/>
 
 		<!-- NAVPOINT HALCYON: NM (0, +9) radius 4 NM = 72 px -->
 		<Ellipse Canvas.Left="288" Canvas.Top="18" Width="144" Height="144"
@@ -118,11 +118,11 @@
 			<TextBlock Foreground="{StaticResource NTDS.FriendColour}" TextWrapping="Wrap" FontSize="11" Margin="8">
 				<Run Text="ПОГОДА - С 110200 ПО 111000Z" FontWeight="Bold"/><LineBreak/>
 				<LineBreak/>
-				Волнение 7 баллов, толчея, длинная зыбь в борт.<LineBreak/>
+				Волнение 7 баллов, длинная зыбь в борт.<LineBreak/>
 				Ветер SW, порывы до 45 узлов.<LineBreak/>
 				Сплошная облачность, нижняя кромка ниже 1000 футов.<LineBreak/>
 				Сильный обложной дождь, встроенные грозы.<LineBreak/>
-				Визуальная дальность менее 0.5 мили. Луны нет.<LineBreak/>
+				Визуальная дальность менее 0.5 мили. Безлуние.<LineBreak/>
 				<LineBreak/>
 				Обзор надводной обстановки забит помехами до 6 миль.<LineBreak/>
 				Пассивный сонар неработоспособен.<LineBreak/>
