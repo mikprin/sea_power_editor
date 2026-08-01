@@ -458,6 +458,47 @@ Naming convention in vanilla is `<MissionNumber><Fact>`, e.g. `08AmmoCarrierSurv
 - Vanilla missions have **no briefing XML at all** — they use `MissionIntro_en` in
   `campaign.ini` instead. Briefing panes are optional.
 
+### Awarding units between missions — two different mechanisms
+
+`TaskForceModeCompletionRewardedUnits=<alias>,<SquadronN>,<count>|...` on a `[MissionN]`
+block **files everything it is handed as an aircraft**. Vanilla only ever hands it
+aircraft (`04 Sunda Strait`, `09 Shadows off Palawan`). Give it a hull and the hull
+turns up under the *Fixed Wing* tab in Task Force Builder.
+
+So:
+
+| Awarding a… | Use |
+|---|---|
+| vessel or submarine | `JoinTaskForce=True` on that unit's section in the mission `.ini` |
+| aircraft, VTOL or helicopter | `TaskForceModeCompletionRewardedUnits` in `campaign.ini` |
+
+**An awarded air wing needs three things or it silently evaporates at the debrief:**
+
+1. the `TaskForceModeCompletionRewardedUnits` line that hands it over;
+2. an entry in `[AllowedHelicopters]` / `[AllowedAircraft]` in
+   `player_task_force_roster.ini` — that is *where an owned airframe lives*, and
+   without a home the campaign drops it between missions;
+3. `TaskForceModeIncludesAirwing=True` on every receiving `[MissionN]`.
+
+`TaskForceModeAllowedRosterUnits` is **purchase gating only** — a unit that is in the
+roster file but absent from that line is still owned and still deploys, it merely
+cannot be bought. That is how vanilla and PhantomWake both hold awarded-but-never-
+purchasable hulls.
+
+`CustomAirGroup=True` on a vessel section, followed by bare `<alias>=<SquadronN>,<count>`
+lines, sets that ship's embarked air group **for that mission only**. It does not award
+anything. Every aviation-capable hull already has a default `[AirGroup]` block in its
+unit file (`wp_ms_roro_b` defaults to 8× `wp_yak-38` + 2× Ka-25), which is what you get
+if you omit `CustomAirGroup`. Deck limits live in `[FlightDeck]`: `AircraftCapacity`
+(hangar + deck) and `DeckParkSlots`.
+
+Related keys, all per-`[MissionN]`: `TaskForceModeAirbasePrepAvailable` /
+`…PrepReadySlots` / `…PrepInProgressSlots` (how many flights start spun up), and
+`TaskForceModeAirTaskingAvailable` + `TaskForceModeAirTaskingFlightN=<id>|<label>|<Role/Role>|<count>|<Loadout/Loadout>`
+(pre-launched flights; roles come from `[AI] Role=`, §17). Vanilla only pairs airbase
+prep with **land** airbases, and the one helicopter air-tasking flight it wrote is
+commented out — neither is confirmed to work off a ship's flight deck.
+
 ---
 
 ## 15. Workflow
