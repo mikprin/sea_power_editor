@@ -1,0 +1,120 @@
+<Grid
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="10"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="10"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="10"/>
+        <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="10"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="Auto"/>
+    </Grid.ColumnDefinitions>
+
+    <TextBlock Grid.Row="1" Grid.ColumnSpan="4" HorizontalAlignment="Left" FontSize="{StaticResource Font.Size.Header}">
+        SECURE CHANNEL - COMPANY EYES
+        <LineBreak/>
+        Z 110245Z AUG 85
+    </TextBlock>
+
+    <TextBlock Grid.Row="3" Grid.Column="0" FontSize="{StaticResource Font.Size.Header}" Text="FM"/>
+    <TextBlock Grid.Row="3" Grid.Column="2" FontSize="{StaticResource Font.Size.Header}" Text="PHANTOM WAKE CONTRACTS DIV - ATLAS"/>
+    <TextBlock Grid.Row="4" Grid.Column="0" FontSize="{StaticResource Font.Size.Header}" Text="TO"/>
+    <TextBlock Grid.Row="4" Grid.Column="2" FontSize="{StaticResource Font.Size.Header}" Text="{TaskForceName}"/>
+    <TextBlock Grid.Row="5" Grid.Column="0" FontSize="{StaticResource Font.Size.Header}" Text="INFO"/>
+    <TextBlock Grid.Row="5" Grid.Column="2" FontSize="{StaticResource Font.Size.Header}">
+        SIREN - EXTERNAL LIAISON<LineBreak/>
+        E.C.H.O. - TACTICAL SYSTEMS<LineBreak/>
+        HALCYON FREIGHT LINES - CLIENT OF RECORD
+    </TextBlock>
+    <TextBlock Grid.Row="7" Grid.Column="0" FontSize="{StaticResource Font.Size.Header}" Text="SUBJ"/>
+    <TextBlock Grid.Row="7" Grid.Column="2" FontSize="{StaticResource Font.Size.Header}" Text="CONTRACT 02-B - HEAVY SEAS - CONVOY ESCORT, WEATHER RISK"/>
+
+    <TextBlock Grid.Row="9" Grid.ColumnSpan="4" FontSize="{StaticResource Font.Size.Header}" TextWrapping="Wrap">
+        COMMERCIAL IN CONFIDENCE
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">SITUATION</Span>
+        <LineBreak/>
+        <LineBreak/>
+        Nobody is hunting this convoy. Nothing in this square is interested in Phantom Wake at all. Read that twice, because it will not be true again for a long time and it is the only reason this contract is worth taking with the company in the state it is in.
+        <LineBreak/>
+        <LineBreak/>
+        A monsoon depression has parked itself across the northbound lane in the central Arabian Sea and has not moved for eleven hours. Sea state seven, wind southwest gusting forty five, continuous rain, embedded thunderstorms, no moon. Visual range under half a mile. Every hull working this water is either hove to or running for the edge of it.
+        <LineBreak/>
+        <LineBreak/>
+        Halcyon Freight Lines does not have that option. They have four laden merchants on a schedule and an underwriter who will not sign the passage without an armed escort riding with them. That escort is us. The fee is flat, it is paid on delivery, and it does not go up if the weather does.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">TRANSCRIPT - CONTRACT BRIEF</Span>
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[ATLAS]</Span> Commander. I hate contracts like this one. We are burning our own fuel and running our own hulls beam on to a sea that is over every limit in our operating manual, so that somebody else's barges do not get set down on a reef. If we open a plate out here, we pay for the yard time ourselves and the client sends a fruit basket.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[ATLAS]</Span> Four ships. CORAL MERIDIAN, ARDENT ISLE and KHALIJ TRADER are capesize bulkers, three hundred metres, loaded to the marks. SOUTHERN GANNET is a general cargo hull less than a twentieth of their tonnage and she is the one I will be watching. Small ships take a big sea badly.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[SIREN]</Span> Neutral water, no coastal state within two hundred miles, no political dimension at all. This is a straight commercial job with a good client behind it. Halcyon move a great deal of tonnage through the Indian Ocean and they remember who took the bad weather contract when nobody else would.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[E.C.H.O.]</Span> ENVIRONMENTAL ASSESSMENT. SEA NOISE IS SATURATING THE PASSIVE SONAR ACROSS ALL BANDS. SURFACE SEARCH RETURNS ARE DEGRADED BY CLUTTER OUT TO SIX MILES. VISUAL RANGE IS UNDER ONE HALF MILE AND THERE IS NO MOON. WE ARE BLIND AND WE ARE DEAF.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[E.C.H.O.]</Span> THIS IS NOT A TACTICAL PROBLEM. THERE IS NO OPPOSING FORCE. IT IS A STATION KEEPING PROBLEM IN CONDITIONS WHERE THE PLOT IS THE ONLY THING YOU CAN TRUST, AND THE PLOT IS BUILT FROM SENSORS THAT ARE HALF BLIND.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[ATLAS]</Span> Take the speed off the squadron and stay close. The convoy makes turns for ahead standard, fifteen knots, and they will hold that whatever we do. They are not going to answer a signal we cannot get to them and they are not going to stop for anybody. Lose them in this and we have failed the contract without a shot being fired at us.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">EXECUTION</Span>
+        <LineBreak/>
+        <LineBreak/>
+        1. (C) Deploy anywhere in the marked box. The column is in it. Take station on either beam or drop a hull back with the tail - your call, and it is a real one.
+        <LineBreak/>
+        2. (C) Escort due north. Sixteen miles from the tail of the column to the edge of NAVPOINT HALCYON. Roughly seventy minutes if nothing goes wrong.
+        <LineBreak/>
+        3. (C) All four merchants must arrive afloat. Four in, four out. Nothing else is being paid for.
+        <LineBreak/>
+        4. (C) The cell thins toward its northern edge. Expect the sea to come off and the visibility to open up in the last third of the passage, around first light.
+        <LineBreak/>
+        5. (C) Aviation is the commander's decision. A helicopter is a better pair of eyes than anything on a mast tonight, and a sea state seven flight deck is a good way to lose an airframe the company cannot replace.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">OTHER TRAFFIC IN THE SQUARE</Span>
+        <LineBreak/>
+        <LineBreak/>
+        Two PetroChem Holdings hulls are working this water and both filed position reports before the cell closed in. Neither is our business, but they are on the plot and the client's insurers will want to know we knew.
+        <LineBreak/>
+        <LineBreak/>
+        MT BARRA HEAD - very large crude carrier, laden, hove to about fifteen miles west of the lane, riding it out. Reported 0210Z.
+        <LineBreak/>
+        MT PETROCHEM CASTOR - T2 type product tanker, laden, eastbound, reported six miles east of the lane at 0140Z. Nothing since.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">REMARKS</Span>
+        <LineBreak/>
+        <LineBreak/>
+        Weapons tight and nothing to shoot at. There is no bonus on this contract for a full magazine because nobody expects you to spend one. There is also no ROE worth writing down - if you manage to sink something out here, it will be one of the four ships you were hired to protect.
+        <LineBreak/>
+        <LineBreak/>
+        This is a night of seamanship. Watch your closing rates on the merchants, watch what the swell does to a small hull at fifteen knots, and remember that in this visibility the first sign of a collision is the collision.
+        <LineBreak/>
+        <LineBreak/>
+        Take the money, Commander. We have had four contracts in a row where somebody was trying to kill us. The company can use a quiet one.
+        <LineBreak/>
+        <LineBreak/>
+        COMMERCIAL IN CONFIDENCE
+        <LineBreak/>
+        DESTROY AFTER READING BT
+    </TextBlock>
+</Grid>

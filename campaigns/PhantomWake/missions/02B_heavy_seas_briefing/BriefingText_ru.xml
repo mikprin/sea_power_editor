@@ -1,0 +1,120 @@
+<Grid
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="10"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="10"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="10"/>
+        <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="10"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="Auto"/>
+    </Grid.ColumnDefinitions>
+
+    <TextBlock Grid.Row="1" Grid.ColumnSpan="4" HorizontalAlignment="Left" FontSize="{StaticResource Font.Size.Header}">
+        ЗАЩИЩЁННЫЙ КАНАЛ - ТОЛЬКО ДЛЯ КОМПАНИИ
+        <LineBreak/>
+        Z 110245Z АВГ 85
+    </TextBlock>
+
+    <TextBlock Grid.Row="3" Grid.Column="0" FontSize="{StaticResource Font.Size.Header}" Text="ОТ"/>
+    <TextBlock Grid.Row="3" Grid.Column="2" FontSize="{StaticResource Font.Size.Header}" Text="PHANTOM WAKE, ОТДЕЛ КОНТРАКТОВ - АТЛАС"/>
+    <TextBlock Grid.Row="4" Grid.Column="0" FontSize="{StaticResource Font.Size.Header}" Text="КОМУ"/>
+    <TextBlock Grid.Row="4" Grid.Column="2" FontSize="{StaticResource Font.Size.Header}" Text="{TaskForceName}"/>
+    <TextBlock Grid.Row="5" Grid.Column="0" FontSize="{StaticResource Font.Size.Header}" Text="КОПИЯ"/>
+    <TextBlock Grid.Row="5" Grid.Column="2" FontSize="{StaticResource Font.Size.Header}">
+        СИРЕНА - ВНЕШНИЕ СВЯЗИ<LineBreak/>
+        E.C.H.O. - БОЕВЫЕ СИСТЕМЫ<LineBreak/>
+        HALCYON FREIGHT LINES - ЗАКАЗЧИК ПО ДОГОВОРУ
+    </TextBlock>
+    <TextBlock Grid.Row="7" Grid.Column="0" FontSize="{StaticResource Font.Size.Header}" Text="ТЕМА"/>
+    <TextBlock Grid.Row="7" Grid.Column="2" FontSize="{StaticResource Font.Size.Header}" Text="КОНТРАКТ 02-B - КОНВОЙ В ШТОРМ - ЭСКОРТ, ПОГОДНЫЙ РИСК"/>
+
+    <TextBlock Grid.Row="9" Grid.ColumnSpan="4" FontSize="{StaticResource Font.Size.Header}" TextWrapping="Wrap">
+        КОММЕРЧЕСКАЯ ТАЙНА
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">ОБСТАНОВКА</Span>
+        <LineBreak/>
+        <LineBreak/>
+        За этим конвоем никто не охотится. В этом квадрате вообще никому нет дела до Phantom Wake. Прочитайте это дважды: такого не повторится ещё долго, и только поэтому контракт стоит брать в том состоянии, в котором сейчас компания.
+        <LineBreak/>
+        <LineBreak/>
+        Муссонная депрессия встала поперёк северного коридора в центральной части Аравийского моря и не двигается одиннадцать часов. Волнение 7 баллов, юго-западный с порывами до сорока пяти, обложной дождь, встроенные грозы, полная темнота. Визуальная дальность менее полумили. Всё, что работает в этой воде, либо легло в дрейф, либо уходит к кромке.
+        <LineBreak/>
+        <LineBreak/>
+        У Halcyon Freight Lines такой возможности нет. У них четыре гружёных судна на графике и страховщик, который не подпишет переход без вооружённого эскорта рядом. Эскорт - это мы. Ставка фиксированная, платится по факту доставки, и от погоды она не растёт.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">СТЕНОГРАММА - ПОСТАНОВКА ЗАДАЧИ</Span>
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[АТЛАС]</Span> Командир, я ненавижу такие контракты. Мы жжём собственное топливо и подставляем собственные корпуса волне, которая превышает все нормы нашего наставления, чтобы чужие баржи не снесло на рифы. Вскроем обшивку - платим за док сами, а заказчик пришлёт корзину фруктов.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[АТЛАС]</Span> Четыре судна. CORAL MERIDIAN, ARDENT ISLE и KHALIJ TRADER - балкеры типа capesize, триста метров, гружены по марку. SOUTHERN GANNET - сухогруз общего назначения, меньше их по тоннажу в двадцать раз, и следить я буду именно за ним. Малые корпуса переносят большую волну плохо.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[СИРЕНА]</Span> Нейтральные воды, ближайшее прибрежное государство в двухстах милях, политики нет вообще. Это чистая коммерция с хорошим заказчиком. Halcyon возят через Индийский океан очень много тоннажа и запоминают тех, кто взял контракт в плохую погоду, когда остальные отказались.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[E.C.H.O.]</Span> ОЦЕНКА СРЕДЫ. ШУМ МОРЯ НАСЫЩАЕТ ПАССИВНЫЙ СОНАР ВО ВСЕХ ДИАПАЗОНАХ. ОБЗОР НАДВОДНОЙ ОБСТАНОВКИ ЗАБИТ ПОМЕХАМИ ДО ШЕСТИ МИЛЬ. ВИЗУАЛЬНАЯ ДАЛЬНОСТЬ МЕНЕЕ ПОЛУМИЛИ, ЛУНЫ НЕТ. МЫ СЛЕПЫ И ГЛУХИ.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[E.C.H.O.]</Span> ЭТО НЕ ТАКТИЧЕСКАЯ ЗАДАЧА. ПРОТИВОДЕЙСТВУЮЩИХ СИЛ НЕТ. ЭТО ЗАДАЧА УДЕРЖАНИЯ СТРОЯ В УСЛОВИЯХ, ГДЕ ЕДИНСТВЕННОЕ, ЧЕМУ МОЖНО ВЕРИТЬ - ЭТО ПЛАНШЕТ, А ПЛАНШЕТ СТРОИТСЯ ПО НАПОЛОВИНУ ОСЛЕПШИМ ДАТЧИКАМ.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">[АТЛАС]</Span> Снизьте скорость эскадры и держитесь ближе. Конвой идёт средним ходом, пятнадцать узлов, и будет держать его, что бы мы ни делали. На сигнал, который до них не дойдёт, они не ответят, и ни для кого не остановятся. Потеряем их в этом - провалим контракт, а в нас даже никто не выстрелит.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">ПОРЯДОК ДЕЙСТВИЙ</Span>
+        <LineBreak/>
+        <LineBreak/>
+        1. (C) Развёртывание в любой точке обозначенного прямоугольника. Колонна внутри него. Занимайте позицию на любом траверзе или оставьте корпус в хвосте - решать вам, и решение настоящее.
+        <LineBreak/>
+        2. (C) Эскорт строго на север. Шестнадцать миль от хвоста колонны до кромки NAVPOINT HALCYON. Около семидесяти минут, если ничего не случится.
+        <LineBreak/>
+        3. (C) Все четыре судна должны дойти на плаву. Четыре вошли, четыре вышли. За остальное не платят.
+        <LineBreak/>
+        4. (C) К северной кромке ячейка утончается. Ожидайте, что волнение спадёт и видимость откроется на последней трети перехода, ближе к рассвету.
+        <LineBreak/>
+        5. (C) Авиация - решение командира. Вертолёт сегодня видит лучше, чем что угодно на мачте, а полётная палуба при семи баллах - хороший способ потерять машину, которую компании не на что заменить.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">ПРОЧЕЕ СУДОХОДСТВО В КВАДРАТЕ</Span>
+        <LineBreak/>
+        <LineBreak/>
+        В этой воде работают два судна PetroChem Holdings, оба подали донесения о месте до закрытия ячейки. К нам они отношения не имеют, но они на планшете, и страховщики заказчика захотят знать, что мы о них знали.
+        <LineBreak/>
+        <LineBreak/>
+        MT BARRA HEAD - супертанкер, гружёный, лежит в дрейфе примерно в пятнадцати милях западнее коридора, пережидает. Донесение в 0210Z.
+        <LineBreak/>
+        MT PETROCHEM CASTOR - продуктовоз типа T2, гружёный, курс восточный, донесение в 0140Z в шести милях восточнее коридора. Больше ничего.
+        <LineBreak/>
+        <LineBreak/>
+        <Span Foreground="{StaticResource NTDS.FriendColour}">ПРИМЕЧАНИЯ</Span>
+        <LineBreak/>
+        <LineBreak/>
+        Оружие в положении «дробь», и стрелять не в кого. Премии за полный погреб на этом контракте нет, потому что никто и не ждёт, что вы его израсходуете. Правил применения оружия тоже писать не нужно: если вам здесь удастся кого-то потопить, это будет одно из четырёх судов, которые вас наняли охранять.
+        <LineBreak/>
+        <LineBreak/>
+        Сегодня ночью работает морская практика, а не артиллерия. Следите за скоростями сближения с судами, следите, что зыбь делает с малым корпусом на пятнадцати узлах, и помните: при такой видимости первый признак столкновения - само столкновение.
+        <LineBreak/>
+        <LineBreak/>
+        Берите деньги, командир. Четыре контракта подряд нас пытались убить. Компании не помешает один спокойный.
+        <LineBreak/>
+        <LineBreak/>
+        КОММЕРЧЕСКАЯ ТАЙНА
+        <LineBreak/>
+        УНИЧТОЖИТЬ ПОСЛЕ ПРОЧТЕНИЯ BT
+    </TextBlock>
+</Grid>
