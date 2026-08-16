@@ -162,25 +162,53 @@ Condition_NoHulls_Taskforce=Taskforce1
 Condition_NoHulls_UnitType=Vessel
 ```
 
-`UnitClassified` needs `_Taskforce=` (who did the classifying) as well as `_Units=`.
+### `UnitDetected` / `UnitClassified` — `_Taskforce=` is the *detector*
 
-`UnitDetected` needs both `_Taskforce=` (who owns the unit being detected) and
-`_Units=` (which units). Fires when the detecting taskforce's sensors acquire
-any unit in the list — respects radar/sonar range, active/passive modes, and fog
-of war. Use `_MinimumUnits=1` to fire on first contact of any single target.
+Both take `_Taskforce=` (the side **doing** the detecting/classifying) and
+`_Units=` (what is being detected, **whatever side owns it**), plus optional
+`_MinimumUnits=` and, on `UnitClassified`, `_UnitType=`. They respect
+radar/sonar range, active/passive modes and fog of war.
+
+The two fields are easy to read backwards, and getting it wrong is not a
+no-op: naming the same side in both (`_Taskforce=Taskforce2` on
+`Taskforce2Vessel*`) means "that side detects its own hulls", which is true at
+t=0, so the trigger fires on the first frame.
+
+The cross-side vanilla files settle it:
 
 ```ini
-Condition_PiratesSpotted_Type=UnitDetected
-Condition_PiratesSpotted_Taskforce=Taskforce2
-Condition_PiratesSpotted_Units=Taskforce2Vessel1,Taskforce2Vessel2,Taskforce2Vessel3,Taskforce2Vessel4
-Condition_PiratesSpotted_MinimumUnits=1
+; Molina/02 Guns of Port Louis.ini Trigger7 - "TG 74.4 detect", player finds enemy
+Condition_Condition1_Type=UnitDetected
+Condition_Condition1_Taskforce=Taskforce1
+Condition_Condition1_Units=Taskforce2Vessel4,Taskforce2Vessel5,Taskforce2Vessel6
+Condition_Condition1_MinimumUnits=1
 ```
 
-Fires the instant player acquires any one pirate, wherever it is on its route —
-no static circle needed. Unverified edge case: `_Taskforce=Neutral` on a neutral
-unit. Vanilla example (`10 Vengeance at Luzon.ini` Trigger9) uses `Taskforce2`
-against enemy side; tested on optional subplot with neutral submarine in 01A
-Sweeping Net.
+**This is also the "the enemy has spotted us" trigger** — invert the sides. Two
+vanilla precedents, both `UnitClassified`:
+
+```ini
+; Molina/01 Wolves of the South Atlantic.ini Trigger4
+; Name=Merchants move east once player detected
+Condition_Condition1_Type=UnitClassified
+Condition_Condition1_Taskforce=Taskforce2
+Condition_Condition1_Units=Taskforce1Vessel1,Taskforce1Vessel3,Taskforce1Vessel4,Taskforce1Vessel2
+Condition_Condition1_MinimumUnits=2
+```
+
+`Linear1/02 Operation Revenge.ini` Trigger3 is the same shape
+(`Description=When BLUFOR classified, start bombers moving`, `_UnitType=Vessel`).
+Detection is not a place, so unlike a `UnitsInTheArea` circle it cannot be
+steered around — this is the correct way to make stealth matter.
+
+`UnitDetected` = raw sensor contact; `UnitClassified` = contact resolved to a
+type. Use `Classified` for anything the story treats as recognition.
+
+Ignore `10 Vengeance at Luzon.ini` Trigger9 as a model: it names `Taskforce2`
+on `Taskforce2Vessel5` and is ANDed with `Time=300`, so it is effectively a
+5-minute timer and proves nothing about the field's meaning. PhantomWake
+copied that shape into eight triggers before the cross-side files were checked;
+all eight are now `_Taskforce=Taskforce1`.
 
 ---
 
